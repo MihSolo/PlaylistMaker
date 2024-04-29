@@ -14,9 +14,10 @@ class MainActivity : AppCompatActivity() {
         val libraryButton = findViewById<Button>(R.id.library)
         val searchButton = findViewById<Button>(R.id.search)
         val settingButton = findViewById<Button>(R.id.settings)
-        val settingButtonClickListener:View.OnClickListener = object: View.OnClickListener{
+        val settingButtonClickListener: View.OnClickListener = object : View.OnClickListener {
             override fun onClick(v: View?) {
-                Toast.makeText(this@MainActivity, "сработал Toast из настроек", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "сработал Toast из настроек", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
         settingButton.setOnClickListener(settingButtonClickListener)
@@ -24,7 +25,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "сработал Toast из поиска", Toast.LENGTH_SHORT).show()
         }
         libraryButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "сработал Toast из библиотеки", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@MainActivity, "сработал Toast из библиотеки", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 }
