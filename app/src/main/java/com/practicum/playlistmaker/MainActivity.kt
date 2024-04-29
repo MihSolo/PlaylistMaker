@@ -1,5 +1,7 @@
 package com.practicum.playlistmaker
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,23 +12,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val libraryButton = findViewById<Button>(R.id.library)
         val searchButton = findViewById<Button>(R.id.search)
-        val settingButton = findViewById<Button>(R.id.settings)
-        val settingButtonClickListener: View.OnClickListener = object : View.OnClickListener {
+        val settingsButton = findViewById<Button>(R.id.settings)
+        val libraryButton = findViewById<Button>(R.id.library)
+
+        searchButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                Toast.makeText(this@MainActivity, "сработал Toast из настроек", Toast.LENGTH_SHORT)
-                    .show()
+                startActivity(Intent(this@MainActivity, SearchActivity::class.java))
             }
-        }
-        settingButton.setOnClickListener(settingButtonClickListener)
-        searchButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "сработал Toast из поиска", Toast.LENGTH_SHORT).show()
-        }
+        })
+
         libraryButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "сработал Toast из библиотеки", Toast.LENGTH_SHORT)
-                .show()
+            startActivity(Intent(this, LibraryActivity::class.java))
+        }
+        settingsButton.setOnClickListener {
+            val settingsButtonIntent = Intent(this, SettingsActivity::class.java)
+            startActivity(settingsButtonIntent)
         }
     }
 }
