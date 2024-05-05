@@ -14,155 +14,144 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_56dp"
+            android:layout_height="@dimen/height_56dp_FL_set_act"
             android:layout_gravity="top"
+            android:layout_marginBottom="@dimen/layout_marginBottom_setting_activity"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="304dp"
+
+            <Button
+                android:id="@+id/backToMain"
+                android:layout_width="48dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="top">
+                android:layout_gravity="start"
+                android:backgroundTint="@color/white"
+                android:contentDescription="null"
+                app:icon="@drawable/arrow"
+                app:iconGravity="textStart"
+                app:iconTint="@color/icon_color" />
 
-                <Button
-                    android:id="@+id/backToMain"
-                    android:layout_width="48dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:backgroundTint="@color/white"
-                    android:contentDescription="null"
-                    app:icon="@drawable/arrow"
-                    app:iconGravity="textStart"
-                    app:iconTint="@color/icon_color" />
+            <TextView
+                android:layout_width="208dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:fontFamily="@font/ys_display_medium"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/minHeight_text"
+                android:paddingLeft="12dp"
+                android:text="@string/settings"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_universal_bookmark_titel" />
 
-                <TextView
-                    android:layout_width="208dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="top"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="12dp"
-                    android:text="@string/settings"
-                    android:textColor="@color/black"
-                    android:textSize="26dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
         </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_56dp"
+            android:layout_height="@dimen/layout_height_set_act_FL"
             android:layout_gravity="start"
             android:paddingLeft="@dimen/padding_16dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="@dimen/layout_width_300"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:gravity="center_vertical"
-                    android:text="@string/dark_thema"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
+            <TextView
+                android:layout_width="@dimen/layout_width_300"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fontFamily="@font/ys_display_regular"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/minHeight_text"
+                android:text="@string/dark_thema"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_16sp_set_act" />
 
             <Switch
-                android:layout_width="@dimen/width_56dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end" />
+                android:layout_width="@dimen/layout_width_SWITCH_set_act"
+                android:layout_height="@dimen/layout_height_SWITCH_set_act"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/layout_marginTop_SWITCH_set_act"
+                android:layout_marginRight="@dimen/layout_marginRight_SWITCH_set_act"
+                android:scaleType="center" />
 
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_56dp"
+            android:layout_height="@dimen/layout_height_set_act_FL"
             android:layout_gravity="start"
             android:paddingLeft="@dimen/padding_16dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="@dimen/layout_width_300"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:gravity="center_vertical"
-                    android:text="@string/share_app"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-
-            <ImageView
-                android:layout_width="@dimen/width_56dp"
+            <TextView
+                android:layout_width="@dimen/layout_width_300"
                 android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fontFamily="@font/ys_display_regular"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/minHeight_text"
+                android:text="@string/share_app"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_16sp_set_act" />
+
+            <TextView
+                android:layout_width="@dimen/layout_width_std_pic"
+                android:layout_height="@dimen/layout_height_std_pic"
                 android:layout_gravity="end"
+                android:layout_marginTop="@dimen/layout_marginTop_set_act_19dp"
+                android:layout_marginRight="12dp"
                 android:scaleType="center"
-                android:src="@drawable/share" />
+                app:drawableEndCompat="@drawable/share"/>
 
         </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_56dp"
+            android:layout_height="@dimen/layout_height_set_act_FL"
             android:layout_gravity="start"
             android:paddingLeft="@dimen/padding_16dp">
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="300dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:gravity="center_vertical"
-                    android:text="@string/support_string"
-                    android:textSize="@dimen/text_size_16sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-
-            <ImageView
-                android:layout_width="@dimen/width_56dp"
+            <TextView
+                android:layout_width="@dimen/layout_width_300"
                 android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fontFamily="@font/ys_display_regular"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/minHeight_text"
+                android:text="@string/support_string"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_16sp_set_act" />
+
+            <TextView
+                android:layout_width="@dimen/layout_width_std_pic"
+                android:layout_height="@dimen/layout_height_std_pic"
                 android:layout_gravity="end"
+                android:layout_marginTop="@dimen/layout_marginTop_set_act_19dp"
+                android:layout_marginRight="12dp"
                 android:scaleType="center"
-                android:src="@drawable/support" />
-
+                app:drawableEndCompat="@drawable/support" />
         </FrameLayout>
-
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_56dp"
+            android:layout_height="@dimen/layout_height_set_act_FL"
             android:layout_gravity="start"
             android:paddingLeft="@dimen/padding_16dp">
 
-            <FrameLayout
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="@dimen/layout_width_300"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:gravity="center_vertical"
-                    android:text="@string/user_accept"
-                    android:textSize="@dimen/text_size_16sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-
-            <ImageView
-                android:layout_width="@dimen/width_56dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:fontFamily="@font/ys_display_regular"
+                android:gravity="center_vertical"
+                android:minHeight="@dimen/minHeight_text"
+                android:text="@string/user_accept"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_16sp_set_act" />
+
+            <TextView
+                android:layout_width="@dimen/layout_width_std_pic"
+                android:layout_height="@dimen/layout_height_std_pic"
                 android:layout_gravity="end"
+                android:layout_marginTop="@dimen/layout_marginTop_set_act_19dp"
+                android:layout_marginRight="12dp"
                 android:scaleType="center"
-                android:src="@drawable/arrow_forward" />
+                app:drawableEndCompat="@drawable/arrow_forward" />
 
         </FrameLayout>
 
