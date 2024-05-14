@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,41 +10,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:background="?attr/colorOnSecondary"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="111dp"
+        tools:layout_editor_absoluteY="75dp">
+
+        <LinearLayout style="@style/LinearLayoutViewOnAppDesktopTop">
+
+            <Button
+                android:id="@+id/backToMain"
+                style="@style/ButtonBackToMain" />
+
+            <TextView
+                style="@style/TextViewTitelNearBackArrow"
+                android:text="@string/search" />
+
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_height_universal"
-            android:layout_gravity="top"
-            android:orientation="horizontal">
+            android:id="@+id/SearchField"
+            style="@style/LinearLayoutSerchScreen">
 
             <LinearLayout
-                android:layout_width="@dimen/layout_width_Lib_Srch_LL"
-                android:layout_height="match_parent"
-                android:layout_gravity="top">
+                android:id="@+id/LLGroup"
+                style="@style/LinearLayoutGroupBorder">
 
-                <Button
-                    android:id="@+id/backToMain"
-                    android:layout_width="@dimen/layout_width_Lib_Srch_Button"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="start"
-                    android:backgroundTint="@color/white"
-                    android:contentDescription="null"
-                    app:icon="@drawable/arrow"
-                    app:iconGravity="textStart"
-                    app:iconTint="@color/icon_color" />
+            <ImageView
+                android:id="@+id/searchButton"
+                style="@style/ImageViewSerchScreen"/>
 
-                <TextView
-                    android:layout_width="208dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="top"
-                    android:gravity="center_vertical"
-                    android:fontFamily="@font/ys_display_medium"
-                    android:paddingLeft="@dimen/paddingLeft_Lib_Srch"
-                    android:text="@string/search"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/textSize_universal_bookmark_titel" />
+            <EditText
+                android:id="@+id/inputEditText"
+                style="@style/EditText_SerchScreen"
+                android:inputType="text"/>
+
+            <ImageView
+                android:id="@+id/clearButton"
+                style="@style/ImageViewSerchScreenReset" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

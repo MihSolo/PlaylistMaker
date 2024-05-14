@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ButtonMainStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/layout_height_main</item>
+        <item name="android:layout_marginHorizontal">@dimen/mergin_16dp</item>
+        <item name="android:layout_weight">@dimen/layout_weight</item>
+        <item name="android:backgroundTint">@color/button_color</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/text_button</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="cornerRadius">@dimen/corner_radius_main_button</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">@dimen/icon_padding</item>
+        <item name="iconTint">@color/icon_color</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+    </style>
+    <style name="ButtonBackToMain">
+        <item name="android:layout_width">@dimen/back_arrow_button_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:contentDescription">null</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/icon_color</item>
+        <item name="icon">@drawable/arrow</item>
+    </style>
+
+    <style name="FrameLayoutSettings">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/layout_height_set_act_FL</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:paddingLeft">@dimen/padding_16dp</item>
+    </style>
+    
+    <style name="LinearLayoutBasicForAllDesctop">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    
+    <style name="LinearLayoutViewOnAppDesktopTop">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_56dp_FL_set_act</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    
+    <style name="TextViewTitelNearBackArrow">
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">@dimen/textSize_universal_bookmark_titel</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:minHeight">@dimen/minHeight_text</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:paddingLeft">@dimen/paddingLeft_Lib_Srch</item>
+    </style>
+    <style name="TextViewSettingsMenyForAll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">@dimen/minHeight_text</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/textSize_16sp_set_act</item>
+
+    </style>
+    <style name="SettingsButtonViewSupport">
+        <item name="android:layout_width">@dimen/layout_width_std_pic</item>
+        <item name="android:layout_height">@dimen/layout_height_std_pic</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_marginTop">@dimen/layout_marginTop_set_act_19dp</item>
+        <item name="android:layout_marginRight">@dimen/layout_marginRight_settings</item>
+        <item name="android:scaleType">center</item>
+        <item name="drawableEndCompat">@drawable/support</item>
+
+    </style>
+    <style name="SettingsButtonViewShareMode">
+        <item name="android:layout_width">@dimen/layout_width_std_pic</item>
+        <item name="android:layout_height">@dimen/layout_height_std_pic</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_marginTop">@dimen/layout_marginTop_set_act_19dp</item>
+        <item name="android:layout_marginRight">@dimen/layout_marginRight_settings</item>
+        <item name="android:scaleType">center</item>
+        <item name="drawableEndCompat">@drawable/share</item>
+
+    </style>
+    <style name="SettingsButtonViewArrow">
+        <item name="android:layout_width">@dimen/layout_width_std_pic</item>
+        <item name="android:layout_height">@dimen/layout_height_std_pic</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_marginTop">@dimen/layout_marginTop_set_act_19dp</item>
+        <item name="android:layout_marginRight">@dimen/layout_marginRight_settings</item>
+        <item name="android:scaleType">center</item>
+        <item name="drawableEndCompat">@drawable/arrow_forward</item>
+    </style>
+    <style name="Switch_NightMode">
+        <item name="android:layout_width">@dimen/layout_width_SWITCH_set_act</item>
+        <item name="android:layout_height">@dimen/layout_height_SWITCH_set_act</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_marginTop">@dimen/layout_marginTop_SWITCH_set_act</item>
+        <item name="android:layout_marginRight">@dimen/layout_marginRight_SWITCH_set_act</item>
+        <item name="android:scaleType">center</item>
+    </style>
+    <style name="EditText_SerchScreen">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+        <item name="android:maxLength">50</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@drawable/rounded_edittext_background</item>
+    </style>
+    <style name="ImageViewSerchScreen">
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_gravity">center</item>
+<!--        <item name="android:layout_marginLeft">16dp</item>-->
+        <item name="android:padding">10dp</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:src">@drawable/magnifying_glass</item>
+        <item name="android:background">@drawable/rounded_imageview_background</item>
+    </style>
+    <style name="ImageViewSerchScreenReset">
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_gravity">center</item>
+<!--        <item name="android:layout_marginLeft">16dp</item>-->
+<!--        <item name="android:layout_marginRight">16dp</item>-->
+        <item name="android:padding">10dp</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:src">@android:drawable/ic_menu_close_clear_cancel</item>
+        <item name="android:background">@drawable/rounded_imageview_background_reset</item>
+    </style>
+    <style name="LinearLayoutSerchScreen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="LinearLayoutGroupBorder">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+       <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:background">@drawable/rounded_imageview_background</item>
+    </style>
+</resources>
