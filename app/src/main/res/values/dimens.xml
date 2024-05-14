@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="button_rad">16dp</dimen>
-    <dimen name="icon_padding">2sp</dimen>
+    <dimen name="icon_padding">2dp</dimen>
     <dimen name="text_size">22sp</dimen>
     <dimen name="mergin_16dp">16dp</dimen>
     <dimen name="layout_height_set_act_FL">61dp</dimen>
@@ -18,7 +18,7 @@
     <dimen name="margin_bottom_setting_main_act">16dp</dimen>
     <dimen name="layout_width">300dp</dimen>
     <dimen name="layout_marginBottom_setting_activity">24dp</dimen>
-    <dimen name="minHeight_text">30dp</dimen>
+    <dimen name="minHeight_text">1dp</dimen>
     <dimen name="layout_width_std_pic">24dp</dimen>
     <dimen name="layout_height_std_pic">24dp</dimen>
     <dimen name="height_56dp_FL_set_act">56dp</dimen>
@@ -33,4 +33,6 @@
     <dimen name="layout_width_Lib_Srch_Button">48dp</dimen>
     <dimen name="textSize_universal_bookmark_titel">26sp</dimen>
     <dimen name="paddingLeft_Lib_Srch">12dp</dimen>
+    <dimen name="back_arrow_button_width">48dp</dimen>
+    <dimen name="layout_marginRight_settings">12dp</dimen>
 </resources>
