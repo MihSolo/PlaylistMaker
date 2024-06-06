@@ -7,4 +7,6 @@
     <color name="main_titel">#FFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="searchIconTintColor">#AEAFB4</color>
+    <color name="searchBackgroundColor">#E6E8EB</color>
 </resources>

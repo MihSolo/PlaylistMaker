@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="button_rad">16dp</dimen>
     <dimen name="icon_padding">2dp</dimen>
     <dimen name="text_size">22sp</dimen>
@@ -34,5 +34,7 @@
     <dimen name="textSize_universal_bookmark_titel">26sp</dimen>
     <dimen name="paddingLeft_Lib_Srch">12dp</dimen>
     <dimen name="back_arrow_button_width">48dp</dimen>
+    <dimen name="padding_8dp">8dp</dimen>
     <dimen name="layout_marginRight_settings">12dp</dimen>
+    <dimen name="TextInputLayout_Corners_SearchDisplay">8dp</dimen>
 </resources>
