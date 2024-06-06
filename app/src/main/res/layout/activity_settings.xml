@@ -37,7 +37,9 @@
 
         </FrameLayout>
 
-        <FrameLayout style="@style/FrameLayoutSettings">
+        <FrameLayout
+            android:id="@+id/sharing"
+            style="@style/FrameLayoutSettings">
 
             <TextView
                 style="@style/TextViewSettingsMenyForAll"
@@ -47,16 +49,20 @@
 
         </FrameLayout>
 
-        <FrameLayout style="@style/FrameLayoutSettings">
+        <FrameLayout
+            android:id="@+id/support"
+            style="@style/FrameLayoutSettings">
 
             <TextView
                 style="@style/TextViewSettingsMenyForAll"
                 android:text="@string/support_string" />
 
-            <TextView style="@style/SettingsButtonViewSupport" />
+            <TextView
+                style="@style/SettingsButtonViewSupport" />
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/customerAgreement"
             style="@style/FrameLayoutSettings"
             android:orientation="horizontal">
 
