@@ -14,16 +14,46 @@
 
         <LinearLayout
             style="@style/LinearLayoutViewOnAppDesktopTop"
-            android:layout_marginBottom="@dimen/layout_marginBottom_setting_activity">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_56dp_FL_set_act">
 
-                <Button
-                    android:id="@+id/backToMain"
-                    style="@style/ButtonBackToMain"/>
+            <Button
+                android:id="@+id/backToMain"
+                style="@style/ButtonBackToMain"
+                android:layout_width="@dimen/back_arrow_button_width"
+                android:layout_height="match_parent" />
 
-                <TextView
-                    android:text="@string/search"
-                    style="@style/TextViewTitelNearBackArrow" />
+            <TextView
+                style="@style/TextViewTitelNearBackArrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/search"
+                android:textFontWeight="500" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/SearchField"
+            style="@style/LinearLayout_SearchDispley_Border_for_EditText"
+            android:layout_width="match_parent"
+            android:layout_height="52dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutSearch"
+                style="@style/TextInputLayout_SearchDisplay"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_gravity="center">
+
+                <EditText
+
+                    android:id="@+id/inputEditText"
+                    style="@style/EditText_SearchDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </LinearLayout>
 
