@@ -22,7 +22,7 @@ class SettingsActivity : AppCompatActivity() {
 
         backToMainSettings.setOnClickListener {
             val backToMainIntent = Intent(this, MainActivity::class.java)
-            startActivity(backToMainIntent)
+            finish()
         }
 
         sharing.setOnClickListener {
@@ -36,7 +36,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         support.setOnClickListener {
-            val shareInt = Intent().apply{
+            val shareInt = Intent().apply {
                 action = Intent.ACTION_SENDTO
                 data = Uri.parse("mailto:")
                 type = "ext/plain"
