@@ -16,7 +16,7 @@ class LibraryActivity : AppCompatActivity() {
 
         backToMainLibrary.setOnClickListener {
             val backToMainIntent = Intent(this, MainActivity::class.java)
-            startActivity(backToMainIntent)
+            finish()
         }
 
     }
