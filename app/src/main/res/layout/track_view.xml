@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardView"
+    style="@style/CardViewBasement_cardView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal">
+
+        <ImageView
+            style="@style/CardViewImageView_trackCover"
+            android:id="@+id/trackCover"/>
+
+        <TextView
+            style="@style/CardViewTextView_artistNameView"
+            android:id="@+id/artistNameView"/>
+
+    <FrameLayout
+        style="@style/CardViewFrameLayout_frameLayout_border"
+        android:id="@+id/frameLayout_border"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artistNameView">
+
+        <TextView
+            style="@style/CardViewTextView_trackNameView"
+            android:id="@+id/trackNameView" />
+
+        <ImageView
+            android:id="@+id/dot"
+            style="@style/CardView_ImageView_dot"
+            android:background="@drawable/dot"/>
+
+        <TextView
+            android:id="@+id/trackTimeView"
+            style="@style/CardView_TextView_trackTimeView"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/cardView_ButtonArrow"
+        style="@style/CardView_textView_SettingsButtonViewArrow"/>
+
+</androidx.cardview.widget.CardView>
+
+
