@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val searchButton = findViewById<Button>(R.id.search)
         val settingsButton = findViewById<Button>(R.id.settings)
         val libraryButton = findViewById<Button>(R.id.library)
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         libraryButton.setOnClickListener {
-            startActivity(Intent(this, LibraryActivity::class.java))
+            startActivity(Intent(this, LibraryActivity::class.java)) //LibraryActivity ActivityForMe
         }
         settingsButton.setOnClickListener {
             val settingsButtonIntent = Intent(this, SettingsActivity::class.java)
