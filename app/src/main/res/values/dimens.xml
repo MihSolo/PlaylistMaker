@@ -64,4 +64,5 @@
     <dimen name="cardView_SettingsButtonViewArrow_ViewWidth">24dp</dimen>
     <dimen name="cardView_SettingsButtonViewArrow_layout_marginTop">18dp</dimen>
     <dimen name="cardView_SettingsButtonViewArrow_layout_marginRight">12dp</dimen>
+    <dimen name="cover_corner_radius_value">2dp</dimen>
 </resources>

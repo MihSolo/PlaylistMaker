@@ -157,11 +157,12 @@
         <item name="android:layout_gravity">left</item>
         <item name="android:layout_marginTop">@dimen/cardView_frameLayout_border_layout_marginTop</item>
         <item name="android:layout_marginLeft">@dimen/cardView_frameLayout_border_layout_marginLeft</item>
-        <item name="android:orientation">vertical</item>
+        <item name="android:orientation">horizontal</item>
+
     </style>
     <style name="CardViewTextView_trackNameView">
         <item name="android:layout_height">@dimen/cardView_trackNameView_ViewHeight</item>
-        <item name="android:layout_width">@dimen/cardView_trackNameView_ViewWidth</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_gravity">left</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:gravity">center_vertical</item>
@@ -169,19 +170,18 @@
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/textColor_CardViewTextView_trackNameView</item>
         <item name="android:textSize">@dimen/cardView_trackNameView_textSize</item>
+        <item name="android:maxLength">30</item>
     </style>
     <style name="CardView_ImageView_dot">
         <item name="android:layout_height">@dimen/cardView_dot_ViewHeight</item>
         <item name="android:layout_width">@dimen/cardView_dot_ViewWidth</item>
-        <item name="android:layout_gravity">left</item>
-        <item name="android:layout_marginLeft">@dimen/cardView_dot_layout_marginLeft</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/dot</item>
     </style>
     <style name="CardView_TextView_trackTimeView">
         <item name="android:layout_width">@dimen/cardView_trackTimeView_layoutWidth</item>
         <item name="android:layout_height">@dimen/cardView_trackNameView_ViewHeight</item>
         <item name="android:layout_gravity">left</item>
-        <item name="android:layout_marginLeft">@dimen/cardView_trackTimeView_layout_marginLeft</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/textColor_CardViewTextView_trackNameView</item>
@@ -192,7 +192,7 @@
         <item name="android:layout_width">@dimen/cardView_SettingsButtonViewArrow_ViewWidth</item>
         <item name="android:layout_gravity">end</item>
         <item name="android:scaleType">center</item>
-        <item name="drawableEndCompat">@drawable/arrow_forward</item>
+        <item name="drawableEndCompat">@drawable/light_mode_recycleview</item>
         <item name="android:layout_marginTop">@dimen/cardView_SettingsButtonViewArrow_layout_marginTop</item>
         <item name="android:layout_marginRight">@dimen/cardView_SettingsButtonViewArrow_layout_marginRight</item>
     </style>

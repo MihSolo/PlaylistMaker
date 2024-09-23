@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     style="@style/CardViewBasement_cardView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal">
 
-        <ImageView
-            style="@style/CardViewImageView_trackCover"
-            android:id="@+id/trackCover"/>
+    <ImageView
+        android:id="@+id/trackCover"
+        style="@style/CardViewImageView_trackCover" />
 
-        <TextView
-            style="@style/CardViewTextView_artistNameView"
-            android:id="@+id/artistNameView"/>
+    <TextView
+        android:id="@+id/trackNameView"
+        style="@style/CardViewTextView_artistNameView" />
 
-    <FrameLayout
-        style="@style/CardViewFrameLayout_frameLayout_border"
+    <LinearLayout
         android:id="@+id/frameLayout_border"
+        style="@style/CardViewFrameLayout_frameLayout_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artistNameView">
 
         <TextView
-            style="@style/CardViewTextView_trackNameView"
-            android:id="@+id/trackNameView" />
+            android:id="@+id/artistNameView"
+            style="@style/CardViewTextView_trackNameView" />
 
-        <ImageView
+        <TextView
             android:id="@+id/dot"
             style="@style/CardView_ImageView_dot"
-            android:background="@drawable/dot"/>
+            android:background="@drawable/dot" />
 
         <TextView
             android:id="@+id/trackTimeView"
-            style="@style/CardView_TextView_trackTimeView"/>
-    </FrameLayout>
+            style="@style/CardView_TextView_trackTimeView" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/cardView_ButtonArrow"
-        style="@style/CardView_textView_SettingsButtonViewArrow"/>
+        style="@style/CardView_textView_SettingsButtonViewArrow" />
 
 </androidx.cardview.widget.CardView>
 

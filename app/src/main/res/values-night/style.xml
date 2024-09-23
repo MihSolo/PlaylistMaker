@@ -133,6 +133,7 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:layout_width">match_parent</item>
     </style>
+
     <style name="CardViewImageView_trackCover">
         <item name="android:layout_width">@dimen/CardViewImageViewWidth</item>
         <item name="android:layout_height">@dimen/CardViewImageViewHeight</item>
@@ -140,11 +141,13 @@
         <item name="android:layout_marginTop">@dimen/CardViewImageView_layout_marginTop</item>
         <item name="android:layout_marginLeft">@dimen/CardViewImageView_layout_marginLeft</item>
     </style>
+
     <style name="CardViewTextView_artistNameView">
         <item name="android:layout_height">@dimen/cardView_artistNameView_ViewHeight</item>
         <item name="android:layout_width">@dimen/cardView_artistNameView_ViewWidth</item>
         <item name="android:layout_gravity">left</item>
-        <item name="android:layout_marginLeft">@dimen/cardView_artistNameView_layout_marginLeft</item>
+        <item name="android:layout_marginLeft">@dimen/cardView_artistNameView_layout_marginLeft
+        </item>
         <item name="android:layout_marginTop">@dimen/cardView_artistNameView_layout_marginTop</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:gravity">center_vertical</item>
@@ -153,17 +156,22 @@
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/cardView_artistNameView_textSize</item>
     </style>
+
     <style name="CardViewFrameLayout_frameLayout_border">
         <item name="android:layout_width">@dimen/cardView_frameLayout_border_ViewWidth</item>
         <item name="android:layout_height">@dimen/cardView_frameLayout_border_ViewHeight</item>
         <item name="android:layout_gravity">left</item>
-        <item name="android:layout_marginTop">@dimen/cardView_frameLayout_border_layout_marginTop</item>
-        <item name="android:layout_marginLeft">@dimen/cardView_frameLayout_border_layout_marginLeft</item>
-        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginTop">@dimen/cardView_frameLayout_border_layout_marginTop
+        </item>
+        <item name="android:layout_marginLeft">
+            @dimen/cardView_frameLayout_border_layout_marginLeft
+        </item>
+        <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="CardViewTextView_trackNameView">
         <item name="android:layout_height">@dimen/cardView_trackNameView_ViewHeight</item>
-        <item name="android:layout_width">@dimen/cardView_trackNameView_ViewWidth</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_gravity">left</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:gravity">center_vertical</item>
@@ -171,32 +179,38 @@
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/cardView_trackNameView_textSize</item>
+        <item name="android:maxLength">30</item>
     </style>
+
     <style name="CardView_ImageView_dot">
         <item name="android:layout_height">@dimen/cardView_dot_ViewHeight</item>
         <item name="android:layout_width">@dimen/cardView_dot_ViewWidth</item>
-        <item name="android:layout_gravity">left</item>
-        <item name="android:layout_marginLeft">@dimen/cardView_dot_layout_marginLeft</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/dot_night</item>
     </style>
+
     <style name="CardView_TextView_trackTimeView">
         <item name="android:layout_width">@dimen/cardView_trackTimeView_layoutWidth</item>
         <item name="android:layout_height">@dimen/cardView_trackNameView_ViewHeight</item>
         <item name="android:layout_gravity">left</item>
-        <item name="android:layout_marginLeft">@dimen/cardView_trackTimeView_layout_marginLeft</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/cardView_trackNameView_textSize</item>
     </style>
+
     <style name="CardView_textView_SettingsButtonViewArrow">
         <item name="android:layout_height">@dimen/cardView_SettingsButtonViewArrow_ViewHeight</item>
         <item name="android:layout_width">@dimen/cardView_SettingsButtonViewArrow_ViewWidth</item>
         <item name="android:layout_gravity">end</item>
         <item name="android:scaleType">center</item>
-        <item name="drawableEndCompat">@drawable/arrow_forward</item>
-        <item name="android:layout_marginTop">@dimen/cardView_SettingsButtonViewArrow_layout_marginTop</item>
-        <item name="android:layout_marginRight">@dimen/cardView_SettingsButtonViewArrow_layout_marginRight</item>
+        <item name="drawableEndCompat">@drawable/light_mode_recucleview_hight</item>
+        <item name="android:layout_marginTop">
+            @dimen/cardView_SettingsButtonViewArrow_layout_marginTop
+        </item>
+        <item name="android:layout_marginRight">
+            @dimen/cardView_SettingsButtonViewArrow_layout_marginRight
+        </item>
     </style>
 
 </resources>
