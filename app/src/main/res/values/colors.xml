@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="searchIconTintColor">#AEAFB4</color>
     <color name="searchBackgroundColor">#E6E8EB</color>
+    <color name="textColor_CardViewTextView_trackNameView">#AEAFB4</color>
 </resources>
