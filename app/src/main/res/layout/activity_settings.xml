@@ -40,16 +40,18 @@
 
             <TextView
                 style="@style/TextViewSettingsMenyForAll"
-                android:text="@string/dark_thema"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp"
+                android:text="@string/dark_thema" />
 
-            <Switch style="@style/Switch_NightMode"
+            <Switch
+                style="@style/Switch_NightMode"
                 android:layout_width="@dimen/layout_width_SWITCH_set_act"
                 android:layout_height="@dimen/layout_height_SWITCH_set_act"
                 android:layout_marginTop="@dimen/layout_marginTop_SWITCH_set_act"
-                android:layout_marginRight="@dimen/layout_marginRight_SWITCH_set_act"/>
+                android:layout_marginRight="@dimen/layout_marginRight_SWITCH_set_act" />
+
         </FrameLayout>
 
         <FrameLayout

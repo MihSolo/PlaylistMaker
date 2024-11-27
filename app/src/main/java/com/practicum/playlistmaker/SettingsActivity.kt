@@ -1,5 +1,6 @@
 package com.practicum.playlistmaker
 
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.createChooser
 import android.net.Uri
@@ -9,8 +10,10 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +59,6 @@ class SettingsActivity : AppCompatActivity() {
             }
             startActivity(agreementIntent)
         }
-
-
     }
 }
 

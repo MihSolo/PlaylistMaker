@@ -13,4 +13,8 @@
     <string name="theme_for_support">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
     <string name="text_for_support">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="customer_agreement">https://yandex.ru/legal/practicum_offer/</string>
+
+    <string name="no_song">Ничего не нашлось</string>
+    <string name="no_internet_line">Проблема со связью\n\nЗагрузка не удалась.Проверьте\nnодключение к интернет</string>
+    <string name="refresh">Обновить</string>
 </resources>
