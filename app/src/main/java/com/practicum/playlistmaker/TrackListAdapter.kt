@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 class TrackListAdapter(
-    private val track: List<Track>
+    private val track: List<Result>
 ) : RecyclerView.Adapter<TrackListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackListHolder {
@@ -17,10 +17,9 @@ class TrackListAdapter(
     }
 
     override fun onBindViewHolder(holder: TrackListHolder, position: Int) {
-        holder.bind(track[position])
+        holder.bind(track[position])   //tracks.get(position)) ----------> ?
     }
 
-    override fun getItemCount(): Int {
-        return track.size
-    }
+    override fun getItemCount(): Int = track.size
+
 }

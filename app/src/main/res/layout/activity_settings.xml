@@ -14,42 +14,38 @@
 
         <LinearLayout
             style="@style/LinearLayoutViewOnAppDesktopTop"
-            android:layout_height="@dimen/height_56dp_FL_set_act"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_56dp_FL_set_act">
 
 
             <Button
                 android:id="@+id/backToMain"
                 style="@style/ButtonBackToMain"
                 android:layout_width="@dimen/back_arrow_button_width"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <TextView
                 style="@style/TextViewTitelNearBackArrow"
-                android:text="@string/settings"
-                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:textFontWeight="500"/>
+                android:layout_height="match_parent"
+                android:text="@string/settings"
+                android:textFontWeight="500" />
 
         </LinearLayout>
 
-        <FrameLayout style="@style/FrameLayoutSettings"
+        <FrameLayout
+            style="@style/FrameLayoutSettings"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height_set_act_FL">
 
-
-            <TextView
-                style="@style/TextViewSettingsMenyForAll"
-                android:text="@string/dark_thema"
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/themeSwitcher"
+                style="@style/Switch_NightMode"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"/>
+                android:layout_gravity="start"
+                android:text="@string/dark_thema"/>
 
-            <Switch style="@style/Switch_NightMode"
-                android:layout_width="@dimen/layout_width_SWITCH_set_act"
-                android:layout_height="@dimen/layout_height_SWITCH_set_act"
-                android:layout_marginTop="@dimen/layout_marginTop_SWITCH_set_act"
-                android:layout_marginRight="@dimen/layout_marginRight_SWITCH_set_act"/>
         </FrameLayout>
 
         <FrameLayout
@@ -60,60 +56,62 @@
 
             <TextView
                 style="@style/TextViewSettingsMenyForAll"
-                android:text="@string/share_app"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp"
+                android:text="@string/share_app" />
 
-            <TextView style="@style/SettingsButtonViewShareMode"
+            <TextView
+                style="@style/SettingsButtonViewShareMode"
                 android:layout_width="@dimen/layout_width_std_pic"
                 android:layout_height="@dimen/layout_height_std_pic"
                 android:layout_marginTop="@dimen/layout_marginTop_set_act_19dp"
-                android:layout_marginRight="@dimen/layout_marginRight_settings"/>
+                android:layout_marginRight="@dimen/layout_marginRight_settings" />
 
         </FrameLayout>
-<!-- растянуть его на всю ширину и указать параметр drawableEnd для иконки.  -->
+
         <FrameLayout
             android:id="@+id/support"
             style="@style/FrameLayoutSettings"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_height_set_act_FL">
-<!--       TextView                                           -->
+
             <TextView
                 style="@style/TextViewSettingsMenyForAll"
-                android:text="@string/support_string"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp"
+                android:text="@string/support_string" />
 
             <TextView
                 style="@style/SettingsButtonViewSupport"
                 android:layout_width="@dimen/layout_width_std_pic"
                 android:layout_height="@dimen/layout_height_std_pic"
                 android:layout_marginTop="@dimen/layout_marginTop_set_act_19dp"
-                android:layout_marginRight="@dimen/layout_marginRight_settings"/>
+                android:layout_marginRight="@dimen/layout_marginRight_settings" />
 
         </FrameLayout>
 
         <FrameLayout
             android:id="@+id/customerAgreement"
             style="@style/FrameLayoutSettings"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_height_set_act_FL">
+            android:layout_height="@dimen/layout_height_set_act_FL"
+            android:orientation="horizontal">
 
             <TextView
                 style="@style/TextViewSettingsMenyForAll"
-                android:text="@string/user_accept"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="20dp"
+                android:text="@string/user_accept" />
 
-            <TextView style="@style/SettingsButtonViewArrow"
+            <TextView
+                style="@style/SettingsButtonViewArrow"
                 android:layout_width="@dimen/layout_width_std_pic"
                 android:layout_height="@dimen/layout_height_std_pic"
                 android:layout_marginTop="@dimen/layout_marginTop_set_act_19dp"
-                android:layout_marginRight="@dimen/layout_marginRight_settings"/>
+                android:layout_marginRight="@dimen/layout_marginRight_settings" />
 
         </FrameLayout>
     </LinearLayout>
