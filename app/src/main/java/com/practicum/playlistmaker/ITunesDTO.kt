@@ -7,5 +7,5 @@ class ITunesDTO(
     @SerializedName("resultCount")
     val resultCount: Int,
     @SerializedName("results")
-    val results: List<Result>
+    val results: List<Result> //Result
 )

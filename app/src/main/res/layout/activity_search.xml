@@ -120,4 +120,32 @@
             android:text="@string/refresh"/>
     </LinearLayout>
 
+    <LinearLayout
+        style="@style/track_history_List_LinearLayout"
+        android:id="@+id/trackHistoryView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/track_history_List_textView_header"
+            android:id="@+id/headerForwatchHistoryList"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="@string/track_history_header_searchActivity"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            style="@style/track_history_List_recyclerView"
+            android:id="@+id/watchHistoryList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            style="@style/track_history_List_Button"
+            android:id="@+id/buttonForwatchHistoryList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/track_history_button"/>
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

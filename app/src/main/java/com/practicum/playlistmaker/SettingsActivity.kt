@@ -24,6 +24,7 @@ class SettingsActivity : AppCompatActivity() {
         val sharing = findViewById<FrameLayout>(R.id.sharing)
         val support = findViewById<FrameLayout>(R.id.support)
         val customerAgreement = findViewById<FrameLayout>(R.id.customerAgreement)
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
 
         backToMainSettings.setOnClickListener {
             val backToMainIntent = Intent(this, MainActivity::class.java)
@@ -58,6 +59,10 @@ class SettingsActivity : AppCompatActivity() {
                 data = Uri.parse(getString(R.string.customer_agreement))
             }
             startActivity(agreementIntent)
+        }
+
+        themeSwitcher.setOnCheckedChangeListener { switcher, isChecked ->
+            (applicationContext as App).switchTheme(isChecked)
         }
     }
 }
