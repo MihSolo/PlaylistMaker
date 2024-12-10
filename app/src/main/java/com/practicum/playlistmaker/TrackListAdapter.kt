@@ -2,13 +2,11 @@ package com.practicum.playlistmaker
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+
 
 class TrackListAdapter(
-    private val track: List<Result>
+    private var track: List<Result>, val listener: Listener
 ) : RecyclerView.Adapter<TrackListHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackListHolder {
@@ -17,9 +15,18 @@ class TrackListAdapter(
     }
 
     override fun onBindViewHolder(holder: TrackListHolder, position: Int) {
-        holder.bind(track[position])   //tracks.get(position)) ----------> ?
+        holder.bind(track[position], listener)
     }
 
     override fun getItemCount(): Int = track.size
+
+    interface Listener {
+        fun OnClick(track: Result)
+    }
+
+    fun updateTracks(newTracks: List<Result>) {
+        track = newTracks
+        notifyDataSetChanged()
+    }
 
 }
