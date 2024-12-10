@@ -5,7 +5,9 @@
     style="@style/CardViewBasement_cardView"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    app:cardElevation="0dp"
+    >
 
     <ImageView
         android:id="@+id/trackCover"

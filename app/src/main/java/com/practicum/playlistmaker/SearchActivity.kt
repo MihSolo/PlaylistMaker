@@ -3,7 +3,6 @@ package com.practicum.playlistmaker
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -18,6 +17,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
@@ -60,8 +60,9 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         val noSongView = findViewById<LinearLayout>(R.id.no_song)
         val refreshButton = findViewById<Button>(R.id.refreshButton)
         val watchHistoryList = findViewById<RecyclerView>(R.id.watchHistoryList)
-        val buttonForwatchHistoryList = findViewById<Button>(R.id.buttonForwatchHistoryList)
+        val buttonClearHistoryList = findViewById<Button>(R.id.buttonClearHistoryList)
         val trackHistoryView = findViewById<LinearLayout>(R.id.trackHistoryView)
+        val linearLayoutButtonHistoryList = findViewById<LinearLayout>(R.id.linearLayoutButton)
         lateinit var tracksAdapter: TrackListAdapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         watchHistoryList.layoutManager =
@@ -116,11 +117,12 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                 })
         }
 
-        buttonForwatchHistoryList.setOnClickListener {
+        buttonClearHistoryList.setOnClickListener {
             searchHistory.clearHistory()
             historyTrackLists.clear()
             historyListAdapters.updateTracks(historyTrackLists)
             trackHistoryView.visibility = View.GONE
+            linearLayoutButtonHistoryList.visibility = View.GONE
         }
 
         backToMainSearch.setOnClickListener {
@@ -134,6 +136,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
             Toast.makeText(this@SearchActivity, text, Toast.LENGTH_SHORT).show()
             editText.setText("")
             trackHistoryView.visibility = View.GONE
+            linearLayoutButtonHistoryList.visibility = View.GONE
 
             val address: String
             address = textFromTextField ?: "try again"
@@ -171,13 +174,20 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                 textInputLayoutSearch.isEndIconVisible = clearButtonVisibility(s)
                 trackHistoryView.visibility =
                     if (editText.hasFocus() && s?.isEmpty() == true && historyTrackLists.size > 0) View.VISIBLE else View.GONE
+                linearLayoutButtonHistoryList.visibility =
+                    if (editText.hasFocus() && s?.isEmpty() == true && historyTrackLists.size > 0) View.VISIBLE else View.GONE
             }
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty().not()) {
                     textFromTextField = s.toString()
                     trackHistoryView.visibility = View.GONE
+                    linearLayoutButtonHistoryList.visibility = View.GONE
                     stringWatcherTextEdit = s.toString()
+                } else if (s.isNullOrEmpty()) {
+                    recyclerView.visibility = View.GONE
+                    noSongView.visibility = View.GONE
+                    noInternetView.visibility = View.GONE
                 }
 
                 if (textInputLayoutSearch.isEndIconVisible.not()) {
@@ -215,6 +225,8 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
         editText.setOnFocusChangeListener { view, hasFocus ->
             trackHistoryView.visibility =
+                if (hasFocus && editText.text.isEmpty() && historyTrackLists.size > 0) View.VISIBLE else View.GONE
+            linearLayoutButtonHistoryList.visibility =
                 if (hasFocus && editText.text.isEmpty() && historyTrackLists.size > 0) View.VISIBLE else View.GONE
         }
 
