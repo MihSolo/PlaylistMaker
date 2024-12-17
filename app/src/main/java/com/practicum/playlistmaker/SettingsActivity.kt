@@ -1,6 +1,5 @@
 package com.practicum.playlistmaker
 
-import android.content.Context
 import android.content.Intent
 import android.content.Intent.createChooser
 import android.net.Uri
@@ -8,11 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
@@ -20,7 +14,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val backToMainSettings = findViewById<Button>(R.id.backToMain)
+        val backToMainSettings = findViewById<Button>(R.id.backToMainArrow)
         val sharing = findViewById<FrameLayout>(R.id.sharing)
         val support = findViewById<FrameLayout>(R.id.support)
         val customerAgreement = findViewById<FrameLayout>(R.id.customerAgreement)
@@ -28,6 +22,7 @@ class SettingsActivity : AppCompatActivity() {
 
         backToMainSettings.setOnClickListener {
             val backToMainIntent = Intent(this, MainActivity::class.java)
+            startActivity(backToMainIntent)
             finish()
         }
 

@@ -14,17 +14,17 @@
         style="@style/CardViewImageView_trackCover" />
 
     <TextView
-        android:id="@+id/trackNameView"
+        android:id="@+id/track_name_view"
         style="@style/CardViewTextView_artistNameView" />
 
     <LinearLayout
         android:id="@+id/frameLayout_border"
         style="@style/CardViewFrameLayout_frameLayout_border"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/artistNameView">
+        app:layout_constraintTop_toBottomOf="@+id/artist_name_view">
 
         <TextView
-            android:id="@+id/artistNameView"
+            android:id="@+id/artist_name_view"
             style="@style/CardViewTextView_trackNameView" />
 
         <TextView

@@ -336,7 +336,101 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:backgroundTint">#1A1B22</item>
-        <item name="android:layout_marginTop">24dp</item>
+<!--        <item name="android:layout_marginTop">24dp</item>-->
 
+    </style>
+
+    <style name="media_player_textviews_right">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+       <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:textColor">#AEAFB4</item>
+        <item name="layout_constraintHorizontal_weight">1</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textSize">13sp</item>
+        <item name="layout_constraintHeight_max">32dp</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+    </style>
+
+    <style name="material_toolbar_library_ac">
+        <item name="navigationIcon">@drawable/arrow</item>
+    </style>
+
+    <style name="media_player_textviews_left">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:textColor">#1A1B22</item>
+        <item name="layout_constraintHorizontal_weight">2</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">9dp</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textSize">13sp</item>
+        <item name="layout_constraintHeight_max">32dp</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+
+    <style name="active_play_time">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">#1A1B22</item>
+        <item name="android:textSize">14sp</item>
+        <item name="layout_constraintTop_toBottomOf">@+id/play_button_center</item>
+        <item name="layout_constrainedWidth">true</item>
+        <item name="layout_constrainedHeight">true</item>
+        <item name="layout_constraintStart_toEndOf">@+id/leftBorder</item>
+        <item name="layout_constraintEnd_toEndOf">@+id/rightBorder</item>
+    </style>
+
+    <style name="textview_between_cover_and_button">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#1A1B22</item>
+        <item name="layout_constraintHeight_max">26dp</item>
+        <item name="layout_constrainedWidth">true</item>
+        <item name="layout_constrainedHeight">true</item>
+        <item name="layout_constraintTop_toBottomOf">@+id/songCoverImage</item>
+        <item name="layout_constraintEnd_toEndOf">@+id/rightBorder</item>
+        <item name="layout_constraintStart_toStartOf">@+id/leftBorder</item>
+    </style>
+
+    <style name="play_button_center_view_la">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginTop">108dp</item>
+        <item name="android:background">@null</item>
+        <item name="srcCompat">@drawable/button_light_play</item>
+    </style>
+
+    <style name="like_button_left_view_la">
+        <item name="android:layout_width">51dp</item>
+        <item name="android:layout_height">51dp</item>
+        <item name="android:layout_marginTop">132dp</item>
+        <item name="android:background">@null</item>
+        <item name="srcCompat">@drawable/button_light_like</item>
+    </style>
+
+    <style name="add_button_right_view_la">
+        <item name="android:layout_width">51dp</item>
+        <item name="android:layout_height">51dp</item>
+        <item name="android:layout_marginTop">132dp</item>
+        <item name="srcCompat">@drawable/button_light_add</item>
+        <item name="layout_constraintHorizontal_chainStyle">spread_inside</item>
+        <item name="android:background">@null</item>
     </style>
 </resources>

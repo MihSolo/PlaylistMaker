@@ -1,8 +1,10 @@
 package com.practicum.playlistmaker
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
@@ -14,12 +16,16 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
+import androidx.appcompat.view.menu.MenuView.ItemView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import okhttp3.*
@@ -34,9 +40,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
     companion object {
+      //  internal var ACTIVITY: Activity? = null
         const val AMOUNT_KEY = "AMOUNT_KEY"
         const val DEF_VALUE = ""
+        var trackForLibraryActivity: Result? = null //Gson().fromJson(SearchActivity.sharedPreferences.getString("last_track_history", null), Result::class.java)
+        var tackForLibraryActivityHL:Int? = null  //-------------------------------------------
+        lateinit var  sharedPreferences:SharedPreferences
     }
+
+
+//    lateinit internal var ACTIVITY: Activity //--------------------------------------------------
+//var trackForLibraryActivity: Result? = Gson().fromJson(SearchActivity.sharedPreferences.getString("last_track_history", null), Result::class.java)
 
     var stringWatcherTextEdit: String = DEF_VALUE
     val historyTrackLists: MutableList<Result> = mutableListOf()
@@ -45,21 +59,27 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
     lateinit var iTunesAPI: ITunesSearchAPI
     var historyListAdapters: TrackListAdapter =
         TrackListAdapter(historyTrackLists, this@SearchActivity)
+    lateinit var watchHistoryList:RecyclerView
+    lateinit var recyclerView:RecyclerView
+  //  private val adapter =  TrackListAdapter(this)
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
 
-        val backToMainSearch = findViewById<Button>(R.id.backToMain)
+        val backToMainSearch = findViewById<Button>(R.id.backToMainArrow)
         val editText = findViewById<EditText>(R.id.inputEditText)
         val textInputLayoutSearch = findViewById<TextInputLayout>(R.id.textInputLayoutSearch)
         var textFromTextField = DEF_VALUE
-        val recyclerView = findViewById<RecyclerView>(R.id.trackList)
+         recyclerView = findViewById<RecyclerView>(R.id.trackList)
         val noInternetView = findViewById<LinearLayout>(R.id.no_internet)
         val noSongView = findViewById<LinearLayout>(R.id.no_song)
         val refreshButton = findViewById<Button>(R.id.refreshButton)
-        val watchHistoryList = findViewById<RecyclerView>(R.id.watchHistoryList)
+         watchHistoryList = findViewById<RecyclerView>(R.id.watchHistoryList)
         val buttonClearHistoryList = findViewById<Button>(R.id.buttonClearHistoryList)
         val trackHistoryView = findViewById<LinearLayout>(R.id.trackHistoryView)
         val linearLayoutButtonHistoryList = findViewById<LinearLayout>(R.id.linearLayoutButton)
@@ -87,10 +107,24 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
                             Log.w("RESPONSE", "${response.body()}")
                             trackList?.let {
-                                tracksAdapter =
-                                    TrackListAdapter(trackList.results, this@SearchActivity)
+                                tracksAdapter = TrackListAdapter(trackList.results, this@SearchActivity)
                                 recyclerView.adapter = tracksAdapter
                                 recyclerView.visibility = View.VISIBLE
+
+//------------------
+//                                trackForLibraryActivity = recyclerView.setRecyclerListener{
+////                                  //  recyclerView.setOnClickListener {  }
+////
+////
+////                                    var h = tracksAdapter.listener.OnClick()
+////            startActivity(Intent(this@SearchActivity, LibraryActivity::class.java))
+//                                    LibraryActivity.ACTIVITY = this@SearchActivity
+//                                    startActivity(Intent(this@SearchActivity,LibraryActivity::class.java))
+//                                    finish()
+////            songCoverImage.setImageURI()
+//                                } as Result
+
+
                             }
                         } else {
 
@@ -117,7 +151,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                 })
         }
 
-        buttonClearHistoryList.setOnClickListener {
+        buttonClearHistoryList.setOnClickListener {  //-----------------------------------
             searchHistory.clearHistory()
             historyTrackLists.clear()
             historyListAdapters.updateTracks(historyTrackLists)
@@ -125,10 +159,21 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
             linearLayoutButtonHistoryList.visibility = View.GONE
         }
 
+
         backToMainSearch.setOnClickListener {
-            Intent(this, MainActivity::class.java)
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+
+//        watchHistoryList.setRecyclerListener {
+//            startActivity(Intent(this, CallbackActivityUse.backToActivity(LibraryActivity(), LibraryActivity())!!::class.java))
+//            finish()
+//        }
+
+
+
+//
+
 
 
         textInputLayoutSearch.setStartIconOnClickListener {
@@ -294,11 +339,49 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         return false
     }
 
+
+//    fun getCoverArtwork() = artworkUrl100.replaceAfterLast('/',"512x512bb.jpg")  ............
+
     override fun OnClick(track: Result) {
+
+        LibraryActivity.ACTIVITY = this@SearchActivity
+        startActivity(Intent(this@SearchActivity,LibraryActivity::class.java))
+        finish()
+
+        tackForLibraryActivityHL = track.trackId
+
+       // val clickTrack = track
+        sharedPreferences = getSharedPreferences("last track", MODE_PRIVATE)
+        var json = Gson().toJson(track)
+        sharedPreferences.edit().putString("last_track_history", json).apply()
+//        json = sharedPreferences.getString("last_track_history", null)// ?: return emptyList()
+        trackForLibraryActivity = Gson().fromJson(sharedPreferences.getString("last_track_history", null), Result::class.java)
+
         searchHistory.add(track)
+//        recyclerView.setRecyclerListener{
+////            startActivity(Intent(this@SearchActivity, LibraryActivity::class.java))
+//            LibraryActivity.ACTIVITY = this
+//            startActivity(Intent(this, LibraryActivity::class.java))
+//            finish()
+////            songCoverImage.setImageURI()
+//        }
+
+
+
         historyTrackLists.clear()
         historyTrackLists.addAll(searchHistory.getHistory())
-        historyListAdapters.updateTracks(historyTrackLists)
+        historyListAdapters.updateTracks(historyTrackLists)  //-------------
+
+        watchHistoryList.setRecyclerListener {
+            LibraryActivity.ACTIVITY = this
+            //CallbackActivityUse.backToActivity(SearchActivity(), LibraryActivity())
+            startActivity(Intent(this, LibraryActivity::class.java))
+//            startActivity(Intent(this@SearchActivity, LibraryActivity::class.java))
+            finish()
+        }
+
+
+
         Log.w("onclick", "${Gson().toJson(historyTrackLists)}")
         Toast.makeText(this@SearchActivity, "${track.trackId}", Toast.LENGTH_SHORT).show()
         Toast.makeText(this@SearchActivity, "${historyTrackLists.size}", Toast.LENGTH_SHORT).show()

@@ -1,11 +1,16 @@
 package com.practicum.playlistmaker
 
+import android.content.Intent
 import android.content.SharedPreferences
+import android.widget.ImageView
 import com.google.gson.Gson
 
 class SearchHistory {
 
     private lateinit var sharedPreferences: SharedPreferences
+
+
+
 
     companion object {
         private const val HISTORY_LIST_KEY = "history_list"
@@ -23,8 +28,8 @@ class SearchHistory {
     fun setHistory(history: List<Result>) {
         val json = Gson().toJson(history)
         sharedPreferences.edit()
-            .putString(HISTORY_LIST_KEY, json)
-            .apply()
+            .putString(HISTORY_LIST_KEY, json)  //.......................делаю 15 треков в
+            .apply()                                                    //истории
     }
 
 
@@ -33,7 +38,7 @@ class SearchHistory {
         return Gson().fromJson(json, Track::class.java)
     }
 
-    fun add(track: Result) {
+    fun add(track: Result){
         val history = getHistory().toMutableList()
         history.removeAll { it.trackId == track.trackId }
         history.add(0, track)
@@ -42,6 +47,8 @@ class SearchHistory {
         }
         setHistory(history)
     }
+
+
 
     fun clearHistory() {
         sharedPreferences.edit().remove(HISTORY_LIST_KEY).apply()
