@@ -11,5 +11,7 @@ data class Result(
     @SerializedName("trackName")
     val trackName: String,
     @SerializedName("trackTimeMillis")
-    val trackTimeMillis: Int
+    val trackTimeMillis: Int,
+    @SerializedName("trackId")
+    val trackId:Int
 )
