@@ -1,11 +1,14 @@
 package com.practicum.playlistmaker
 
+import android.content.Intent
 import android.content.SharedPreferences
+import android.widget.ImageView
 import com.google.gson.Gson
 
 class SearchHistory {
 
     private lateinit var sharedPreferences: SharedPreferences
+
 
     companion object {
         private const val HISTORY_LIST_KEY = "history_list"
@@ -42,6 +45,7 @@ class SearchHistory {
         }
         setHistory(history)
     }
+
 
     fun clearHistory() {
         sharedPreferences.edit().remove(HISTORY_LIST_KEY).apply()

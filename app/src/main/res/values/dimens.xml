@@ -65,6 +65,7 @@
     <dimen name="cardView_SettingsButtonViewArrow_layout_marginTop">18dp</dimen>
     <dimen name="cardView_SettingsButtonViewArrow_layout_marginRight">12dp</dimen>
     <dimen name="cover_corner_radius_value">2dp</dimen>
+    <dimen name="trackLabelRadius">8dp</dimen>
 
     <dimen name="button_refresh_size">14sp</dimen>
     <dimen name="size_102">102dp</dimen>

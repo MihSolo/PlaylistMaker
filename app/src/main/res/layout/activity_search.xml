@@ -16,7 +16,7 @@
         android:layout_height="@dimen/height_56dp_FL_set_act">
 
         <Button
-            android:id="@+id/backToMain"
+            android:id="@+id/backToMainArrow"
             style="@style/ButtonBackToMain"
             android:layout_width="@dimen/back_arrow_button_width"
             android:layout_height="match_parent" />

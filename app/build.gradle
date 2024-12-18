@@ -51,4 +51,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0' // - конвертор для развёртывания json
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
+
 }

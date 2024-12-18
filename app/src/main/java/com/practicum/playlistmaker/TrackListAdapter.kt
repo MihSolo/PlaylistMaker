@@ -1,8 +1,12 @@
 package com.practicum.playlistmaker
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 
 
 class TrackListAdapter(
