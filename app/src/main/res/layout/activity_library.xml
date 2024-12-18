@@ -130,7 +130,7 @@
         <TextView
             android:id="@+id/track_albumValue_view"
             style="@style/media_player_textviews_left"
-            android:ellipsize="start"
+            android:ellipsize="end"
             android:maxLines="1"
             android:scrollHorizontally="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -195,6 +195,6 @@
             app:layout_constraintHeight_max="32dp"
             app:layout_constraintStart_toEndOf="@+id/track_style_view"
             app:layout_constraintTop_toBottomOf="@+id/track_styleValue_view" />
-        
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
