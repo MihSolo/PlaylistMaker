@@ -26,22 +26,3 @@ data class Result(
     @SerializedName("primaryGenreName")
     val primaryGenreName:String
 )
-//    :Parcelable{
-//  constructor(parcel:Parcel):this(
-//      parcel.readInt(),
-//      parcel.readString()!!,
-//      parcel.readString()!!
-//  ){
-//
-//  }
-//
-//    override fun describeContents(): Int {
-//        return 0
-//    }
-//
-//    override fun writeToParcel(dest: Parcel, flags: Int) {
-//      dest.writeInt(trackTimeMillis)
-//        dest.writeString(artistName)
-//        dest.writeString(country)
-//    }
-//}

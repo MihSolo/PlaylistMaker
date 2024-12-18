@@ -10,8 +10,6 @@ class SearchHistory {
     private lateinit var sharedPreferences: SharedPreferences
 
 
-
-
     companion object {
         private const val HISTORY_LIST_KEY = "history_list"
     }
@@ -28,8 +26,8 @@ class SearchHistory {
     fun setHistory(history: List<Result>) {
         val json = Gson().toJson(history)
         sharedPreferences.edit()
-            .putString(HISTORY_LIST_KEY, json)  //.......................делаю 15 треков в
-            .apply()                                                    //истории
+            .putString(HISTORY_LIST_KEY, json)
+            .apply()
     }
 
 
@@ -38,7 +36,7 @@ class SearchHistory {
         return Gson().fromJson(json, Track::class.java)
     }
 
-    fun add(track: Result){
+    fun add(track: Result) {
         val history = getHistory().toMutableList()
         history.removeAll { it.trackId == track.trackId }
         history.add(0, track)
@@ -47,7 +45,6 @@ class SearchHistory {
         }
         setHistory(history)
     }
-
 
 
     fun clearHistory() {

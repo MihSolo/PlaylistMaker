@@ -28,26 +28,9 @@ class MainActivity : AppCompatActivity() {
 
 
         libraryButton.setOnClickListener {
-         //   Log.w("MainActivity", CallbackActivityUse.v.toString())
-
-            //CallbackActivityUse
-//            if(SearchActivity.trackForLibraryActivity == null) {
-//                SearchActivity.trackForLibraryActivity = Gson().fromJson(
-//                    SearchActivity.sharedPreferences.getString(
-//                        "last_track_history",
-//                        null
-//                    ), Result::class.java
-//                )
-//            }
-
-
-            //SearchActivity.trackForLibraryActivity
-//            Log.w("ma2","${Gson().fromJson(SearchActivity.sharedPreferences.getString("last_track_history", null), Result::class.java)}")
-          //  Log.w("ma1","${SearchActivity.trackForLibraryActivity.toString()}")
-//            Log.w("ma2","${Gson().fromJson(SearchActivity.sharedPreferences.getString("last_track_history", null), Result::class.java)}")
             LibraryActivity.ACTIVITY = MainActivity()
-            startActivity(Intent(this, LibraryActivity::class.java))//CallbackActivityUse.backToActivity(MainActivity(), LibraryActivity())!!::class.java)) //LibraryActivity ActivityForMe
-        finish()
+            startActivity(Intent(this, LibraryActivity::class.java))
+            finish()
         }
         settingsButton.setOnClickListener {
             val settingsButtonIntent = Intent(this, SettingsActivity::class.java)

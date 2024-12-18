@@ -184,6 +184,11 @@ class LibraryActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
 
     }
 
+    override fun dispatchTouchEvent(event: MotionEvent?): Boolean {
+        onTouchEvent(event)
+        return super.dispatchTouchEvent(event)
+    }
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         gestureDetector.onTouchEvent(event!!)
 
