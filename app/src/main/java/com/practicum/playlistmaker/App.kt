@@ -16,13 +16,6 @@ class App : Application() {
         val sharedPreferences = getSharedPreferences("Mode", Context.MODE_PRIVATE)
         darkTheme = sharedPreferences.getBoolean("night", false)
 
-
-//        if (!sharedPreferences.contains("night")) {
-//            val isSystemDarkTheme = resources.configuration.uiMode and
-//                    android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES
-//            sharedPreferences.edit().putBoolean("night", isSystemDarkTheme).apply()
-//        }
-
         AppCompatDelegate.setDefaultNightMode(
             if (darkTheme) {
                 AppCompatDelegate.MODE_NIGHT_YES

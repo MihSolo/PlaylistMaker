@@ -9,30 +9,32 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import com.google.gson.Gson
+import com.practicum.playlistmaker.databinding.ActivityMainBinding
+import com.practicum.playlistmaker.databinding.ActivitySearchBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        val searchButton = findViewById<Button>(R.id.search)
-        val settingsButton = findViewById<Button>(R.id.settings)
-        val libraryButton = findViewById<Button>(R.id.library)
-
-        searchButton.setOnClickListener(object : View.OnClickListener {
+        binding.search.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 startActivity(Intent(this@MainActivity, SearchActivity::class.java))
                 finish()
             }
         })
 
-
-        libraryButton.setOnClickListener {
+        binding.library.setOnClickListener {
             LibraryActivity.ACTIVITY = MainActivity()
             startActivity(Intent(this, LibraryActivity::class.java))
             finish()
         }
-        settingsButton.setOnClickListener {
+        binding.settings.setOnClickListener {
             val settingsButtonIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsButtonIntent)
             finish()
