@@ -20,4 +20,10 @@
 
     <string name="track_history_header_searchActivity">Вы искали</string>
     <string name="track_history_button">Очистить историю</string>
+
+    <string name="time_duration">Длительность</string>
+    <string name="album">Альбом</string>
+    <string name="year">Год</string>
+    <string name="genre">Жанр</string>
+    <string name="country">Страна</string>
 </resources>
