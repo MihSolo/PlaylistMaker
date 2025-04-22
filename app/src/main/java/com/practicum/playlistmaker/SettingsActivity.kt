@@ -8,25 +8,26 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.FrameLayout
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.practicum.playlistmaker.databinding.ActivityLibraryBinding
+import com.practicum.playlistmaker.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {
+
+    private val binding: ActivitySettingsBinding by lazy {
+        ActivitySettingsBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        setContentView(binding.root)
 
-        val backToMainSettings = findViewById<Button>(R.id.backToMainArrow)
-        val sharing = findViewById<FrameLayout>(R.id.sharing)
-        val support = findViewById<FrameLayout>(R.id.support)
-        val customerAgreement = findViewById<FrameLayout>(R.id.customerAgreement)
-        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
-
-        backToMainSettings.setOnClickListener {
+        binding.backToMainArrow.setOnClickListener {
             val backToMainIntent = Intent(this, MainActivity::class.java)
             startActivity(backToMainIntent)
             finish()
         }
 
-        sharing.setOnClickListener {
+        binding.sharing.setOnClickListener {
             val sendIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, getString(R.string.androidDeveloper))
@@ -36,7 +37,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(chooser)
         }
 
-        support.setOnClickListener {
+        binding.support.setOnClickListener {
             val shareInt = Intent().apply {
                 action = Intent.ACTION_SENDTO
                 data = Uri.parse("mailto:")
@@ -48,7 +49,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(createChooser(shareInt, title))
         }
 
-        customerAgreement.setOnClickListener {
+        binding.customerAgreement.setOnClickListener {
             val agreementIntent = Intent().apply {
                 action = Intent.ACTION_VIEW
                 data = Uri.parse(getString(R.string.customer_agreement))
@@ -56,7 +57,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(agreementIntent)
         }
 
-        themeSwitcher.setOnCheckedChangeListener { switcher, isChecked ->
+        binding.themeSwitcher.setOnCheckedChangeListener { switcher, isChecked ->
             (applicationContext as App).switchTheme(isChecked)
         }
     }

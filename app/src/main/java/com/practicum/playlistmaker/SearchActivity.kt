@@ -8,6 +8,8 @@ import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -22,12 +24,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
+import com.practicum.playlistmaker.databinding.ActivitySearchBinding
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -42,11 +46,51 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
     companion object {
         const val AMOUNT_KEY = "AMOUNT_KEY"
         const val DEF_VALUE = ""
-        var trackForLibraryActivity: Result? = null
-        var tackForLibraryActivityHL: Int? = null
-        lateinit var sharedPreferences: SharedPreferences
+        var textFromTextField = DEF_VALUE
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
+    var trackForLibraryActivity: Result? = null
+    var tackForLibraryActivityHL: Int? = null
+    lateinit var sharedPreferences: SharedPreferences
+    private var isClickAllowed = true
+    private val handler = Handler(Looper.getMainLooper())
+
+    private val searchRunnable = Runnable {
+        if(binding.inputEditText.text.isNotEmpty()){
+            address = binding.inputEditText.text?.toString() ?: "tryagain"
+            createAPIresponse(address)
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(binding.inputEditText.windowToken, 0)
+        }else{
+            binding.progressBar.visibility = View.GONE
+        }
+        if(binding.refreshButton.isClickable){
+            binding.refreshButton.setOnClickListener {
+                binding.trackListRecyclerView.visibility = View.GONE
+                binding.noSong.visibility = View.GONE
+                binding.noInternet.visibility = View.GONE
+
+                createAPIresponse(textFromTextField)
+                Toast.makeText(
+                    this@SearchActivity,
+                    "${textFromTextField} - не найдено. Проверьте доступ к интернету.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+
+
+    private val binding: ActivitySearchBinding by lazy {
+        ActivitySearchBinding.inflate(layoutInflater)
+    }
+
+    lateinit var tracksAdapter: TrackListAdapter
+    lateinit var  address: String
     var stringWatcherTextEdit: String = DEF_VALUE
     val historyTrackLists: MutableList<Result> = mutableListOf()
     val searchHistory = SearchHistory()
@@ -54,113 +98,46 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
     lateinit var iTunesAPI: ITunesSearchAPI
     var historyListAdapters: TrackListAdapter =
         TrackListAdapter(historyTrackLists, this@SearchActivity)
-    lateinit var watchHistoryList: RecyclerView
-    lateinit var recyclerView: RecyclerView
-    //  private val adapter =  TrackListAdapter(this)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
+        setContentView(binding.root)
 
-
-        val backToMainSearch = findViewById<Button>(R.id.backToMainArrow)
-        val editText = findViewById<EditText>(R.id.inputEditText)
-        val textInputLayoutSearch = findViewById<TextInputLayout>(R.id.textInputLayoutSearch)
-        var textFromTextField = DEF_VALUE
-        recyclerView = findViewById<RecyclerView>(R.id.trackList)
-        val noInternetView = findViewById<LinearLayout>(R.id.no_internet)
-        val noSongView = findViewById<LinearLayout>(R.id.no_song)
-        val refreshButton = findViewById<Button>(R.id.refreshButton)
-        watchHistoryList = findViewById<RecyclerView>(R.id.watchHistoryList)
-        val buttonClearHistoryList = findViewById<Button>(R.id.buttonClearHistoryList)
-        val trackHistoryView = findViewById<LinearLayout>(R.id.trackHistoryView)
-        val linearLayoutButtonHistoryList = findViewById<LinearLayout>(R.id.linearLayoutButton)
-        lateinit var tracksAdapter: TrackListAdapter
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        watchHistoryList.layoutManager =
-            LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
+        binding.trackListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.watchHistoryList.layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
         searchHistory.sharedPreferencesCreated(getSharedPreferences("SEARCH_HISTORY", MODE_PRIVATE))
         historyTrackLists.addAll(searchHistory.getHistory())
 
-
-        fun createAPIresponse(valueForRequest: String) {
-            iTunesAPI = configureRetrofit()
-            iTunesAPI.search(valueForRequest)
-                .enqueue(object : Callback<ITunesDTO> {
-
-                    override fun onResponse(
-                        call: Call<ITunesDTO>,
-                        response: Response<ITunesDTO>
-                    ) {
-                        val trackList = response.body()
-                        if (response.isSuccessful && trackList?.resultCount != 0) {
-                            noSongView.visibility = View.GONE
-                            noInternetView.visibility = View.GONE
-
-                            Log.w("RESPONSE", "${response.body()}")
-                            trackList?.let {
-                                tracksAdapter =
-                                    TrackListAdapter(trackList.results, this@SearchActivity)
-                                recyclerView.adapter = tracksAdapter
-                                recyclerView.visibility = View.VISIBLE
-
-                            }
-                        } else {
-
-                            if (response.code() != 200) {
-                                recyclerView.visibility = View.GONE
-                                noSongView.visibility = View.GONE
-                                noInternetView.visibility = View.VISIBLE
-
-                            }
-                            if (trackList?.resultCount == 0) {
-                                recyclerView.visibility = View.GONE
-                                noSongView.visibility = View.VISIBLE
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ITunesDTO>, t: Throwable) {
-                        if (isConnected(this@SearchActivity).not()) {
-                            recyclerView.visibility = View.GONE
-                            noSongView.visibility = View.GONE
-                            noInternetView.visibility = View.VISIBLE
-                        }
-                    }
-                })
-        }
-
-        buttonClearHistoryList.setOnClickListener {
+        binding.buttonClearHistoryList.setOnClickListener {
             searchHistory.clearHistory()
             historyTrackLists.clear()
             historyListAdapters.updateTracks(historyTrackLists)
-            trackHistoryView.visibility = View.GONE
-            linearLayoutButtonHistoryList.visibility = View.GONE
+            binding.trackHistoryView.visibility = View.GONE
+                binding.linearLayoutButton.visibility = View.GONE
         }
 
 
-        backToMainSearch.setOnClickListener {
+        binding.backToMainArrow.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
-        textInputLayoutSearch.setStartIconOnClickListener {
+        binding.textInputLayoutSearch.setStartIconOnClickListener {
             val text = "результат поиска по заданному значению: " + textFromTextField
             Toast.makeText(this@SearchActivity, text, Toast.LENGTH_SHORT).show()
-            editText.setText("")
-            trackHistoryView.visibility = View.GONE
-            linearLayoutButtonHistoryList.visibility = View.GONE
+            binding.inputEditText.setText("")
+            binding.trackHistoryView.visibility = View.GONE
+            binding.linearLayoutButton.visibility = View.GONE
 
-            val address: String
             address = textFromTextField ?: "try again"
             Toast.makeText(this@SearchActivity, address, Toast.LENGTH_SHORT).show()
             createAPIresponse(address)
-            if (refreshButton.isClickable) {
-                refreshButton.setOnClickListener {
-                    recyclerView.visibility = View.GONE
-                    noSongView.visibility = View.GONE
-                    noInternetView.visibility = View.GONE
+            if (binding.refreshButton.isClickable) {
+                binding.refreshButton.setOnClickListener {
+                    binding.trackListRecyclerView.visibility = View.GONE
+                    binding.noSong.visibility = View.GONE
+                    binding.noInternet.visibility = View.GONE
 
                     createAPIresponse(textFromTextField)
                     Toast.makeText(
@@ -172,80 +149,127 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
             }
         }
 
-        textInputLayoutSearch.setEndIconOnClickListener {
-            editText.setText("")
-            recyclerView.visibility = View.GONE
-            noSongView.visibility = View.GONE
-            noInternetView.visibility = View.GONE
+        binding.textInputLayoutSearch.setEndIconOnClickListener {
+            binding.inputEditText.setText("")
+            binding.progressBar.visibility = View.GONE
+            binding.trackListRecyclerView.visibility = View.GONE
+            binding.noSong.visibility = View.GONE
+            binding.noInternet.visibility = View.GONE
         }
 
         val textInputLayout = object : TextWatcher {
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
-                Unit
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int){
+                if(binding.inputEditText.text.toString() == "" && binding.inputEditText.text.toString().isEmpty()){ //|| binding.trackHistoryView.isVisible) {
+                    binding.progressBar.visibility = View.GONE //---------------------------------------------------------------------
+                }
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                textInputLayoutSearch.isEndIconVisible = clearButtonVisibility(s)
-                trackHistoryView.visibility =
-                    if (editText.hasFocus() && s?.isEmpty() == true && historyTrackLists.size > 0) View.VISIBLE else View.GONE
-                linearLayoutButtonHistoryList.visibility =
-                    if (editText.hasFocus() && s?.isEmpty() == true && historyTrackLists.size > 0) View.VISIBLE else View.GONE
+                if(binding.inputEditText.text.toString() != ""){
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                searchDebounce()
+                binding.textInputLayoutSearch.isEndIconVisible = clearButtonVisibility(s)
+                binding.trackHistoryView.visibility =
+                    if (binding.inputEditText.hasFocus() && s?.isEmpty() == true && historyTrackLists.size > 0) View.VISIBLE else View.GONE
+                binding.linearLayoutButton.visibility =
+                    if (binding.inputEditText.hasFocus() && s?.isEmpty() == true && historyTrackLists.size > 0) View.VISIBLE else View.GONE
             }
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty().not()) {
                     textFromTextField = s.toString()
-                    trackHistoryView.visibility = View.GONE
-                    linearLayoutButtonHistoryList.visibility = View.GONE
+                    binding.trackHistoryView.visibility = View.GONE
+                    binding.linearLayoutButton.visibility = View.GONE
                     stringWatcherTextEdit = s.toString()
                 } else if (s.isNullOrEmpty()) {
-                    recyclerView.visibility = View.GONE
-                    noSongView.visibility = View.GONE
-                    noInternetView.visibility = View.GONE
+                    binding.trackListRecyclerView.visibility = View.GONE
+                    binding.noSong.visibility = View.GONE
+                    binding.noInternet.visibility = View.GONE
+                    binding.progressBar.visibility = View.GONE
+                }
+                if(binding.trackListRecyclerView.isVisible){ //--------------------------------------------------------------------------------
+                    binding.trackHistoryView.visibility = View.GONE
                 }
 
-                if (textInputLayoutSearch.isEndIconVisible.not()) {
+                if (binding.textInputLayoutSearch.isEndIconVisible.not()) {
                     val inputMethodManager =
                         getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    inputMethodManager?.hideSoftInputFromWindow(editText.windowToken, 0)
+                    inputMethodManager?.hideSoftInputFromWindow(binding.inputEditText.windowToken, 0)
                 }
 
-                editText.setOnEditorActionListener { _, actionId, _ ->
-                    if (actionId == EditorInfo.IME_ACTION_DONE) {
-                        val address: String
-                        address = s?.toString() ?: "try again"
-                        createAPIresponse(address)
-
-                    }
-                    if (refreshButton.isClickable) {
-                        refreshButton.setOnClickListener {
-                            recyclerView.visibility = View.GONE
-                            noSongView.visibility = View.GONE
-                            noInternetView.visibility = View.GONE
-
-                            createAPIresponse(textFromTextField)
-                            Toast.makeText(
-                                this@SearchActivity,
-                                "${textFromTextField} - не найдено. Проверьте доступ к интернету.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                    false
-                }
             }
         }
-        editText.addTextChangedListener(textInputLayout)
+        binding.inputEditText.addTextChangedListener(textInputLayout)
 
-        editText.setOnFocusChangeListener { view, hasFocus ->
-            trackHistoryView.visibility =
-                if (hasFocus && editText.text.isEmpty() && historyTrackLists.size > 0) View.VISIBLE else View.GONE
-            linearLayoutButtonHistoryList.visibility =
-                if (hasFocus && editText.text.isEmpty() && historyTrackLists.size > 0) View.VISIBLE else View.GONE
+        binding.inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            binding.trackHistoryView.visibility =
+                if (hasFocus && binding.inputEditText.text.isEmpty() && historyTrackLists.size > 0) View.VISIBLE else View.GONE
+            binding.linearLayoutButton.visibility =
+                if (hasFocus && binding.inputEditText.text.isEmpty() && historyTrackLists.size > 0) View.VISIBLE else View.GONE
         }
 
         historyListAdapters = TrackListAdapter(historyTrackLists, this@SearchActivity)
-        watchHistoryList.adapter = historyListAdapters
+        if(clickDebounce()) {   //-----------------------------------------------------------------------------------------------
+            binding.watchHistoryList.adapter = historyListAdapters
+        }
+    }
+
+
+    fun createAPIresponse(valueForRequest: String) {
+        iTunesAPI = configureRetrofit()
+        iTunesAPI.search(valueForRequest)
+            .enqueue(object : Callback<ITunesDTO> {
+
+                override fun onResponse(
+                    call: Call<ITunesDTO>,
+                    response: Response<ITunesDTO>
+                ) {
+                    binding.progressBar.visibility = View.GONE
+                    val trackList = response.body()
+                    if (response.isSuccessful && trackList?.resultCount != 0) {
+                        binding.noSong.visibility = View.GONE
+                        binding.noInternet.visibility = View.GONE
+
+                        Log.w("RESPONSE", "${response.body()}")
+                        trackList?.let {
+
+                                tracksAdapter =
+                                    TrackListAdapter(trackList.results, this@SearchActivity)
+                            if(clickDebounce()) {   //---------------------------------------------------------------------
+                                binding.trackListRecyclerView.adapter = tracksAdapter
+                                binding.trackListRecyclerView.visibility = View.VISIBLE
+                            }
+                        }
+                    } else {
+
+                        if (response.code() != 200) {
+                            binding.trackListRecyclerView.visibility = View.GONE
+                            binding.noSong.visibility = View.GONE
+                            binding.noInternet.visibility = View.VISIBLE
+
+                        }
+                        if (trackList?.resultCount == 0) {
+                            binding.trackListRecyclerView.visibility = View.GONE
+                            binding.noSong.visibility = View.VISIBLE
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<ITunesDTO>, t: Throwable) {
+                    if (isConnected(this@SearchActivity).not()) {
+                        binding.trackListRecyclerView.visibility = View.GONE
+                        binding.noSong.visibility = View.GONE
+                        binding.noInternet.visibility = View.VISIBLE
+                    }
+                }
+            })
+    }
+
+    private fun searchDebounce() {   //------------------------------------------------searchDebounce
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 
 
@@ -276,6 +300,15 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         stringWatcherTextEdit = savedInstanceState.getString(AMOUNT_KEY, DEF_VALUE)
+    }
+
+    private fun clickDebounce() : Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Boolean {
@@ -314,6 +347,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         startActivity(Intent(this@SearchActivity, LibraryActivity::class.java))
         finish()
 
+
         tackForLibraryActivityHL = track.trackId
         sharedPreferences = getSharedPreferences("last track", MODE_PRIVATE)
         var json = Gson().toJson(track)
@@ -328,7 +362,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         historyTrackLists.addAll(searchHistory.getHistory())
         historyListAdapters.updateTracks(historyTrackLists)
 
-        watchHistoryList.setRecyclerListener {
+        binding.watchHistoryList.setRecyclerListener {
             LibraryActivity.ACTIVITY = this
             startActivity(Intent(this, LibraryActivity::class.java))
             finish()
