@@ -10,8 +10,11 @@ import com.google.gson.Gson
 
 
 class TrackListAdapter(
-    private var track: List<Result>, val listener: Listener
-) : RecyclerView.Adapter<TrackListHolder>() {
+    private var track:List<Result>, var listener:Listener
+): RecyclerView.Adapter<TrackListHolder>() {
+
+//   private lateinit var track: List<Result>
+//   private lateinit var listener: Listener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackListHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_view, parent, false)

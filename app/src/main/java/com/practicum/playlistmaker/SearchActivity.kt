@@ -51,6 +51,11 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
+
+    private lateinit var networkService: NetworkService //++++++++++++++++++++++++++++++++++++=
+    private val uiUpdate: UIUpdate  = UIUpdate()
+    private val retrofitConfiguration = RetrofitConfiguration()//++++++++++++++++++++++++++++++++++++++++++++++++++=
+
     var trackForLibraryActivity: Result? = null
     var tackForLibraryActivityHL: Int? = null
     lateinit var sharedPreferences: SharedPreferences
@@ -60,7 +65,18 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
     private val searchRunnable = Runnable {
         if(binding.inputEditText.text.isNotEmpty()){
             address = binding.inputEditText.text?.toString() ?: "tryagain"
-            createAPIresponse(address)
+
+
+
+            //createAPIresponse(address)
+           // if(networkService.createApi(address, responseResult) != null) {
+                //response =
+                    networkService.createApi(address, uiUpdate, this,
+                        { clickDebounce() }, retrofitConfiguration,  {isConnected(this)})
+             //   } //+++++++++++++++++++++++++++
+           // responseResult(response) //++++++++++++++++++++++++++++++++++++++
+
+
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(binding.inputEditText.windowToken, 0)
@@ -73,7 +89,14 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                 binding.noSong.visibility = View.GONE
                 binding.noInternet.visibility = View.GONE
 
-                createAPIresponse(textFromTextField)
+               // createAPIresponse(textFromTextField)
+             //   if(networkService.createApi(textFromTextField) != null) {
+               //     response = networkService.createApi(textFromTextField)!!
+                networkService.createApi(textFromTextField, uiUpdate, this, {clickDebounce()}, retrofitConfiguration, {isConnected(this)})
+                //} //+++++++++++++++++++++++++++
+                //responseResult(response)//++++++++++++++++++++++++++++++
+
+
                 Toast.makeText(
                     this@SearchActivity,
                     "${textFromTextField} - не найдено. Проверьте доступ к интернету.",
@@ -85,7 +108,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
 
 
-    private val binding: ActivitySearchBinding by lazy {
+    internal val binding: ActivitySearchBinding by lazy {
         ActivitySearchBinding.inflate(layoutInflater)
     }
 
@@ -104,10 +127,16 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
+
+
         binding.trackListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.watchHistoryList.layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
         searchHistory.sharedPreferencesCreated(getSharedPreferences("SEARCH_HISTORY", MODE_PRIVATE))
         historyTrackLists.addAll(searchHistory.getHistory())
+
+        networkService = NetworkService()  //+++++++++++++++++++++++++++++++++++
+       // uiUpdate = UIUpdate(binding.trackListRecyclerView, binding.noSong,binding.noInternet, binding.progressBar) //++++++++
 
         binding.buttonClearHistoryList.setOnClickListener {
             searchHistory.clearHistory()
@@ -132,14 +161,22 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
             address = textFromTextField ?: "try again"
             Toast.makeText(this@SearchActivity, address, Toast.LENGTH_SHORT).show()
-            createAPIresponse(address)
+
+//            createAPIresponse(address)
+           // if(networkService.createApi(address) != null) {
+             //   response = networkService.createApi(address)!!
+            //} //+++++++++++++++++++++++++++
+            networkService.createApi(address, uiUpdate, this, {clickDebounce()}, retrofitConfiguration,  {isConnected(this)} )
+            //responseResult(response)//+++++++++++++++++++++++++++++++++++
             if (binding.refreshButton.isClickable) {
                 binding.refreshButton.setOnClickListener {
                     binding.trackListRecyclerView.visibility = View.GONE
                     binding.noSong.visibility = View.GONE
                     binding.noInternet.visibility = View.GONE
 
-                    createAPIresponse(textFromTextField)
+//                                               //+++++++++++++++++++++++++++
+                    networkService.createApi(textFromTextField, uiUpdate, this, {clickDebounce()}, retrofitConfiguration,  {isConnected(this)} )
+                    //responseResult(response)//++++++++++++++++++++++++++++++==
                     Toast.makeText(
                         this@SearchActivity,
                         "${textFromTextField} - не найдено. Проверьте доступ к интернету.",
@@ -169,6 +206,9 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                 if(binding.inputEditText.text.toString() != ""){
                     binding.progressBar.visibility = View.VISIBLE
                 }
+                // тут надо прописать, что если былл ввод
+                // и потом один из символов был стёрт
+                // progresBar не появляется
                 searchDebounce()
                 binding.textInputLayoutSearch.isEndIconVisible = clearButtonVisibility(s)
                 binding.trackHistoryView.visibility =
@@ -214,10 +254,14 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         if(clickDebounce()) {   //-----------------------------------------------------------------------------------------------
             binding.watchHistoryList.adapter = historyListAdapters
         }
-    }
 
 
-    fun createAPIresponse(valueForRequest: String) {
+
+
+    } //OnCreayte(.........)
+
+
+    fun createAPIrespons(valueForRequest: String) {
         iTunesAPI = configureRetrofit()
         iTunesAPI.search(valueForRequest)
             .enqueue(object : Callback<ITunesDTO> {
@@ -226,21 +270,32 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                     call: Call<ITunesDTO>,
                     response: Response<ITunesDTO>
                 ) {
-                    binding.progressBar.visibility = View.GONE
-                    val trackList = response.body()
-                    if (response.isSuccessful && trackList?.resultCount != 0) {
+                    binding.progressBar.visibility = View.GONE    //?????????????????????????????????
+
+                   // val trackList = response.body()
+
+                   // if (response.isSuccessful && trackList?.resultCount != 0) {
+                    if(response.isSuccessful){
                         binding.noSong.visibility = View.GONE
                         binding.noInternet.visibility = View.GONE
 
                         Log.w("RESPONSE", "${response.body()}")
-                        trackList?.let {
-
-                                tracksAdapter =
-                                    TrackListAdapter(trackList.results, this@SearchActivity)
-                            if(clickDebounce()) {   //---------------------------------------------------------------------
+//                        trackList?.let {
+//
+//                                tracksAdapter =
+//                                    TrackListAdapter(trackList.results, this@SearchActivity)
+//                            if(clickDebounce()) {   //---------------------------------------------------------------------
+//                                binding.trackListRecyclerView.adapter = tracksAdapter
+//                                binding.trackListRecyclerView.visibility = View.VISIBLE
+//                            }
+//                        }
+                        response.body()?.let {
+                            tracksAdapter = TrackListAdapter(it.results, this@SearchActivity) //?:  можно добавить возврат error
+                            if(clickDebounce()){
                                 binding.trackListRecyclerView.adapter = tracksAdapter
                                 binding.trackListRecyclerView.visibility = View.VISIBLE
                             }
+
                         }
                     } else {
 
@@ -250,7 +305,8 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                             binding.noInternet.visibility = View.VISIBLE
 
                         }
-                        if (trackList?.resultCount == 0) {
+                       // if (trackList?.resultCount == 0) {
+                        if(response.body()?.resultCount == 0) {
                             binding.trackListRecyclerView.visibility = View.GONE
                             binding.noSong.visibility = View.VISIBLE
                         }
