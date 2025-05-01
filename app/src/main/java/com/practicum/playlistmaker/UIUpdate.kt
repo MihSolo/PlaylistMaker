@@ -44,7 +44,7 @@ class UIUpdate(
             Toast.makeText(activity, "response not null", Toast.LENGTH_SHORT).show()
             if (response.isSuccessful) {
                 activity.binding.noSong.visibility = View.GONE
-                activity.binding.noInternet.visibility = View.GONE
+                activity.binding.noInternet.visibility = View.GONE 
 //                if(activity is SearchActivity){
 //                response.body()?.let {
 //                    activity.tracksAdapter = TrackListAdapter(   //trackAdapter -> TrackListAdapter
