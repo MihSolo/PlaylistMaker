@@ -1,15 +1,14 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Presentation
 
-import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.Group
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.R
 import java.util.Locale
 
 class TrackListHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -37,8 +36,7 @@ class TrackListHolder(view: View) : RecyclerView.ViewHolder(view) {
         Glide.with(itemView)
             .load(track.artworkUrl100)
             .placeholder(
-                R.drawable
-                    .connection_error
+                R.drawable.connection_error
             )
             .fitCenter()
             .transform(RoundedCorners(itemView.context.resources.getDimensionPixelSize(R.dimen.cover_corner_radius_value)))

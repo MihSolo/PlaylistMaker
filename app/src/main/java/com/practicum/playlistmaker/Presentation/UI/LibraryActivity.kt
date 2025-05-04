@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Presentation.UI
 
 import android.app.Activity
 import android.content.Intent
@@ -16,6 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.gson.Gson
+import com.practicum.playlistmaker.App
+import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityLibraryBinding
 import com.practicum.playlistmaker.databinding.ActivitySettingsBinding
 import java.text.SimpleDateFormat
@@ -117,8 +120,7 @@ class LibraryActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                     )
                 )
                 .placeholder(
-                    R.drawable
-                        .error_light_label_big
+                    R.drawable.error_light_label_big
                 )
                 .fitCenter()
                 .transform(
@@ -144,12 +146,10 @@ class LibraryActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 binding.trackNameView.setText("inactive")
                 Glide.with(binding.songCoverImage)
                     .load(
-                        R.drawable
-                            .error_light_label_big
+                        R.drawable.error_light_label_big
                     )
                     .placeholder(
-                        R.drawable
-                            .error_light_label_big
+                        R.drawable.error_light_label_big
                     )
                     .fitCenter()
                     .transform(
@@ -174,12 +174,10 @@ class LibraryActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
                 binding.trackNameView.setText("")
                 Glide.with(binding.songCoverImage)
                     .load(
-                        R.drawable
-                            .error_light_label_big
+                        R.drawable.error_light_label_big
                     )
                     .placeholder(
-                        R.drawable
-                            .error_light_label_big
+                        R.drawable.error_light_label_big
                     )
                     .fitCenter()
                     .transform(

@@ -1,14 +1,12 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Presentation.UI
 
 import android.content.Intent
 import android.content.Intent.createChooser
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.FrameLayout
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.practicum.playlistmaker.databinding.ActivityLibraryBinding
+import com.practicum.playlistmaker.App
+import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivitySettingsBinding
 
 class SettingsActivity : AppCompatActivity() {

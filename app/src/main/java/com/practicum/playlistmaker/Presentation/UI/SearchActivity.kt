@@ -1,7 +1,6 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Presentation.UI
 
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -14,23 +13,20 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuView.ItemView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
+import com.practicum.playlistmaker.Data.ITunesSearchAPI
+import com.practicum.playlistmaker.Data.RetrofitConfiguration
+import com.practicum.playlistmaker.Data.SearchHistory
+import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.ITunesDTO
+import com.practicum.playlistmaker.NetworkService
+import com.practicum.playlistmaker.Presentation.TrackListAdapter
+import com.practicum.playlistmaker.Presentation.UIUpdate
 import com.practicum.playlistmaker.databinding.ActivitySearchBinding
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
@@ -52,8 +48,11 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
     }
 
 
+   // private val useCase = Creator  UseCase -> execute  ......у Interactor -> play() pause() для PlayerInteractor - пример
+ //  UseCase Iterator надл реализовать через интерфейс, через абстракцию.....
+
     private lateinit var networkService: NetworkService //++++++++++++++++++++++++++++++++++++=
-    private val uiUpdate: UIUpdate  = UIUpdate()
+    private val uiUpdate: UIUpdate = UIUpdate()
     private val retrofitConfiguration = RetrofitConfiguration()//++++++++++++++++++++++++++++++++++++++++++++++++++=
 
     var trackForLibraryActivity: Result? = null
@@ -99,7 +98,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
                 Toast.makeText(
                     this@SearchActivity,
-                    "${textFromTextField} - не найдено. Проверьте доступ к интернету.",
+                    "$textFromTextField - не найдено. Проверьте доступ к интернету.",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -132,14 +131,14 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
         binding.trackListRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.watchHistoryList.layoutManager = LinearLayoutManager(this@SearchActivity, LinearLayoutManager.VERTICAL, false)
-        searchHistory.sharedPreferencesCreated(getSharedPreferences("SEARCH_HISTORY", MODE_PRIVATE))
-        historyTrackLists.addAll(searchHistory.getHistory())
+        searchHistory.sharedPreferencesCreated(getSharedPreferences("SEARCH_HISTORY", MODE_PRIVATE)) // создаём файл для локального хранения
+        historyTrackLists.addAll(searchHistory.getHistory())  // сохраняем пустой список....
 
         networkService = NetworkService()  //+++++++++++++++++++++++++++++++++++
        // uiUpdate = UIUpdate(binding.trackListRecyclerView, binding.noSong,binding.noInternet, binding.progressBar) //++++++++
 
         binding.buttonClearHistoryList.setOnClickListener {
-            searchHistory.clearHistory()
+            searchHistory.clearHistory()            // очишаем созданный список истории...
             historyTrackLists.clear()
             historyListAdapters.updateTracks(historyTrackLists)
             binding.trackHistoryView.visibility = View.GONE
@@ -179,7 +178,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                     //responseResult(response)//++++++++++++++++++++++++++++++==
                     Toast.makeText(
                         this@SearchActivity,
-                        "${textFromTextField} - не найдено. Проверьте доступ к интернету.",
+                        "$textFromTextField - не найдено. Проверьте доступ к интернету.",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -413,9 +412,9 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
             Result::class.java
         )
 
-        searchHistory.add(track)
+        searchHistory.add(track)   //  добавляем трек в список истории
         historyTrackLists.clear()
-        historyTrackLists.addAll(searchHistory.getHistory())
+        historyTrackLists.addAll(searchHistory.getHistory())    // добавляет список песен
         historyListAdapters.updateTracks(historyTrackLists)
 
         binding.watchHistoryList.setRecyclerListener {
