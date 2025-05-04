@@ -1,9 +1,8 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Domain
 
-import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-data class Track(
+data class Track(  //entities
     val trackName:String,
     val artistName:String,
     val trackTime:String,

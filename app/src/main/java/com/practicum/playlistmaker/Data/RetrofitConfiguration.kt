@@ -1,5 +1,6 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Data
 
+import com.practicum.playlistmaker.ITunesDTO
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Callback
@@ -32,7 +33,7 @@ class RetrofitConfiguration {
 
     }
 
-    private fun loadResults(iTunesSearchAPI: ITunesSearchAPI, callback: Callback<ITunesDTO>, callString:String){
+    fun loadResults(iTunesSearchAPI: ITunesSearchAPI, callString:String, callback: Callback<ITunesDTO>){
         iTunesSearchAPI.search(callString).enqueue(callback)
     }
 }

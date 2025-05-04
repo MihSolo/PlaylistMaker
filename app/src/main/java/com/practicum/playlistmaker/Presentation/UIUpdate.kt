@@ -1,12 +1,10 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Presentation
 
 import android.app.Activity
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
-import okhttp3.internal.http2.Http2Connection
+import com.practicum.playlistmaker.ITunesDTO
+import com.practicum.playlistmaker.Presentation.UI.SearchActivity
 import retrofit2.Response
 
 
@@ -32,7 +30,7 @@ class UIUpdate(
 
                                //избавляемся от конкретной activity,  и добавляем в параметры лямда функцию, которой задаём адаптер для конкретной активити
     fun uiRefreshOnResponseMethod(response: Response<ITunesDTO>,
-                                  activity: Activity,clickDebounce:() -> Boolean){
+                                  activity: Activity, clickDebounce:() -> Boolean){
                                    if(activity is SearchActivity){
         activity.binding.progressBar.visibility = View.GONE    //?????????????????????????????????
 //        Toast.makeText(
@@ -44,7 +42,7 @@ class UIUpdate(
             Toast.makeText(activity, "response not null", Toast.LENGTH_SHORT).show()
             if (response.isSuccessful) {
                 activity.binding.noSong.visibility = View.GONE
-                activity.binding.noInternet.visibility = View.GONE 
+                activity.binding.noInternet.visibility = View.GONE
 //                if(activity is SearchActivity){
 //                response.body()?.let {
 //                    activity.tracksAdapter = TrackListAdapter(   //trackAdapter -> TrackListAdapter

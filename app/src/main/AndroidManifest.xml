@@ -17,19 +17,19 @@
         android:theme="@style/Base.Theme.PlaylistMaker"
         tools:targetApi="31">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".Presentation.UI.SettingsActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".SearchActivity"
+            android:name=".Presentation.UI.SearchActivity"
             android:exported="false"
             />
         <activity
-            android:name=".LibraryActivity"
+            android:name=".Presentation.UI.LibraryActivity"
             android:exported="false"
             />
         <activity
-            android:name=".MainActivity"
+            android:name=".Presentation.UI.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

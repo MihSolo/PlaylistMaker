@@ -1,12 +1,10 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Domain
 
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-data class Result(
+data class Result(   //entities
     @SerializedName("artistName")
     val artistName: String,
     @SerializedName("artworkUrl100")

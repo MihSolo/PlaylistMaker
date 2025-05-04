@@ -1,29 +1,34 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Data
 
-import android.content.Intent
 import android.content.SharedPreferences
-import android.widget.ImageView
 import com.google.gson.Gson
+import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.Domain.Track
 
-class SearchHistory {
+class SearchHistory { //use cases
 
-    private lateinit var sharedPreferences: SharedPreferences
+    //class SearchHistoryManager(private val context : Context){
+    //private val  sharedPreferences: SharedPreferences = context.getSharedPreferences("history_list", Context.MODE_PRIVATE)
+    // private val gson = Gson()
 
 
-    companion object {
+    private lateinit var sharedPreferences: SharedPreferences   // net neobhodimosti
+
+
+    companion object {   //  srazu net neobhodimosti
         private const val HISTORY_LIST_KEY = "history_list"
     }
 
-    fun sharedPreferencesCreated(sharedPreferences: SharedPreferences) {
+    fun sharedPreferencesCreated(sharedPreferences: SharedPreferences) {   //net neobhodimosti
         this.sharedPreferences = sharedPreferences
     }
 
-    fun getHistory(): List<Result> {
+    fun getHistory(): List<Result> {   //get
         val json = sharedPreferences.getString(HISTORY_LIST_KEY, null) ?: return emptyList()
         return Gson().fromJson(json, Array<Result>::class.java).toList()
     }
 
-    fun setHistory(history: List<Result>) {
+    fun setHistory(history: List<Result>) {   //save
         val json = Gson().toJson(history)
         sharedPreferences.edit()
             .putString(HISTORY_LIST_KEY, json)

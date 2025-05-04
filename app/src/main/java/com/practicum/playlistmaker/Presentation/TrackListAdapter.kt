@@ -1,16 +1,14 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.Presentation
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
+import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.R
 
 
 class TrackListAdapter(
-    private var track:List<Result>, var listener:Listener
+    private var track:List<Result>, var listener: Listener
 ): RecyclerView.Adapter<TrackListHolder>() {
 
 //   private lateinit var track: List<Result>

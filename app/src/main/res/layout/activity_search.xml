@@ -7,7 +7,7 @@
     android:background="?attr/colorOnSecondary"
     android:orientation="vertical"
     android:id="@+id/mainLayout"
-    tools:context=".SearchActivity">
+    tools:context=".Presentation.UI.SearchActivity">
 
 
     <LinearLayout
