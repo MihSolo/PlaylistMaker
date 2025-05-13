@@ -2,7 +2,6 @@ package com.practicum.playlistmaker.Data
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.practicum.playlistmaker.Domain.Result
 import com.practicum.playlistmaker.Domain.Track
 
 class SearchHistory { //use cases
@@ -23,12 +22,14 @@ class SearchHistory { //use cases
         this.sharedPreferences = sharedPreferences
     }
 
-    fun getHistory(): List<Result> {   //get
+    fun getHistory(): List<Track> {   //get   //   должны использовать ITunesDTO так, как данный класс
+        // находится в слое DATA
         val json = sharedPreferences.getString(HISTORY_LIST_KEY, null) ?: return emptyList()
-        return Gson().fromJson(json, Array<Result>::class.java).toList()
+        return Gson().fromJson(json, Array<Track>::class.java).toList()
     }
 
-    fun setHistory(history: List<Result>) {   //save
+    fun setHistory(history: List<Track>) {   //save
+        // //   должны использовать ITunesDTO так, как данный класс находится в слое DATA
         val json = Gson().toJson(history)
         sharedPreferences.edit()
             .putString(HISTORY_LIST_KEY, json)
@@ -36,12 +37,12 @@ class SearchHistory { //use cases
     }
 
 
-    fun convertResultToTrack(result: Result): Track {   ////////////////////////////////////////----------------для логов
-        val json = Gson().toJson(result)
-        return Gson().fromJson(json, Track::class.java)
-    }
+//    fun convertResultToTrack(result: Track): Track {   ////////////////////////////////////////----------------для логов
+//        val json = Gson().toJson(result)
+//        return Gson().fromJson(json, Track::class.java)
+//    }
 
-    fun add(track: Result) {
+    fun add(track: Track) {
         val history = getHistory().toMutableList()
         history.removeAll { it.trackId == track.trackId }
         history.add(0, track)

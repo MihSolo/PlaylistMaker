@@ -1,6 +1,7 @@
 package com.practicum.playlistmaker
 
 import android.app.Activity
+import com.practicum.playlistmaker.Data.ITunesDTO
 import com.practicum.playlistmaker.Data.RetrofitConfiguration
 import com.practicum.playlistmaker.Presentation.TrackListAdapter
 import com.practicum.playlistmaker.Presentation.UI.SearchActivity
@@ -28,11 +29,11 @@ fun createApi(requestValue:String, ui: UIUpdate,
                     )
                 }
             }
-            ui.uiRefreshOnResponseMethod(response, activity, clickDebounce)
+         //   ui.uiRefreshOnResponseMethod(response, activity, clickDebounce)
         }
 
         override fun onFailure(call: Call<ITunesDTO>, t: Throwable) {
-            ui.uiRefreshOnFailureMethod(activity,isconnected)
+          //  ui.uiRefreshOnFailureMethod(activity,isconnected)
         }
 
     })

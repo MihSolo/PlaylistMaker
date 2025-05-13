@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.Domain.Track
 import com.practicum.playlistmaker.R
 import java.util.Locale
 
@@ -24,7 +24,7 @@ class TrackListHolder(view: View) : RecyclerView.ViewHolder(view) {
         trackCover = itemView.findViewById(R.id.trackCover)
     }
 
-    fun bind(track: Result, listener: TrackListAdapter.Listener? = null) {
+    fun bind(track: Track, listener: TrackListAdapter.Listener? = null) {
         trackNameView.setText(track.trackName)
         artistNameView.setText(track.artistName)
         trackTimeView.setText(

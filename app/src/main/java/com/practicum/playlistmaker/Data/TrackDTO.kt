@@ -1,10 +1,9 @@
-package com.practicum.playlistmaker.Domain
-
+package com.practicum.playlistmaker.Data
 
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
-data class Result(   //entities
+data class TrackDTO (
     @SerializedName("artistName")
     val artistName: String,
     @SerializedName("artworkUrl100")
@@ -24,5 +23,4 @@ data class Result(   //entities
     @SerializedName("primaryGenreName")
     val primaryGenreName:String,
     @SerializedName("previewUrl")
-    val previewUrl:String
-)
+    val previewUrl:String)
