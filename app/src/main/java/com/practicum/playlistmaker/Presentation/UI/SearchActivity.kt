@@ -22,9 +22,9 @@ import com.google.gson.Gson
 import com.practicum.playlistmaker.Data.ITunesSearchAPI
 import com.practicum.playlistmaker.Data.RetrofitConfiguration
 import com.practicum.playlistmaker.Data.SearchHistory
-import com.practicum.playlistmaker.Domain.Result
-import com.practicum.playlistmaker.ITunesDTO
-import com.practicum.playlistmaker.NetworkService
+import com.practicum.playlistmaker.Domain.LoadTracksListAPI
+import com.practicum.playlistmaker.Domain.Track
+import com.practicum.playlistmaker.Data.ITunesDTO
 import com.practicum.playlistmaker.Presentation.TrackListAdapter
 import com.practicum.playlistmaker.Presentation.UIUpdate
 import com.practicum.playlistmaker.databinding.ActivitySearchBinding
@@ -47,15 +47,30 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
+    internal val binding: ActivitySearchBinding by lazy {
+        ActivitySearchBinding.inflate(layoutInflater)
+    }
+
+    private lateinit var loadTracksListAPI: LoadTracksListAPI  //   ispolzuem UseCases class
+    lateinit var tracksAdapter: TrackListAdapter
+
 
    // private val useCase = Creator  UseCase -> execute  ......у Interactor -> play() pause() для PlayerInteractor - пример
  //  UseCase Iterator надл реализовать через интерфейс, через абстракцию.....
 
-    private lateinit var networkService: NetworkService //++++++++++++++++++++++++++++++++++++=
-    private val uiUpdate: UIUpdate = UIUpdate()
+  //  private lateinit var networkService: NetworkService //++++++++++++++++++++++++++++++++++++=
+
+//    private val trackListRecyclerView = findViewById<RecyclerView>(R.id.trackListRecyclerView)
+//    private val noSong = findViewById<LinearLayout>(R.id.no_song)
+//    private val noInternet = findViewById<LinearLayout>(R.id.no_internet)
+//    private val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+//
+
+//    private val uiUpdate: UIUpdate = UIUpdate(binding.trackListRecyclerView, binding.noSong, binding.noInternet, binding.progressBar)
+private val uiUpdate: UIUpdate = UIUpdate()
     private val retrofitConfiguration = RetrofitConfiguration()//++++++++++++++++++++++++++++++++++++++++++++++++++=
 
-    var trackForLibraryActivity: Result? = null
+    var trackForLibraryActivity: Track? = null
     var tackForLibraryActivityHL: Int? = null
     lateinit var sharedPreferences: SharedPreferences
     private var isClickAllowed = true
@@ -69,9 +84,24 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
             //createAPIresponse(address)
            // if(networkService.createApi(address, responseResult) != null) {
-                //response =
-                    networkService.createApi(address, uiUpdate, this,
-                        { clickDebounce() }, retrofitConfiguration,  {isConnected(this)})
+                //response
+//                    networkService = NetworkService()
+            loadTracksListAPI = LoadTracksListAPI(retrofitConfiguration)//, uiUpdate, this, isConnected(this) )
+                loadTracksListAPI.execute(address,{
+                this.tracksAdapter = TrackListAdapter(it.results, this)
+//                uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+//                uiUpdate.uiRefreshOnFailureMethod(this, {isConnected(this)})
+            }, {
+//                    uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this), it)
+                    uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+//                    uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this))
+                },{
+                    uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this))//, it)
+                })
+
+
+//                    networkService.createApi(address, uiUpdate, this,
+//                        { clickDebounce() }, retrofitConfiguration,  {isConnected(this)})
              //   } //+++++++++++++++++++++++++++
            // responseResult(response) //++++++++++++++++++++++++++++++++++++++
 
@@ -91,7 +121,23 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                // createAPIresponse(textFromTextField)
              //   if(networkService.createApi(textFromTextField) != null) {
                //     response = networkService.createApi(textFromTextField)!!
-                networkService.createApi(textFromTextField, uiUpdate, this, {clickDebounce()}, retrofitConfiguration, {isConnected(this)})
+
+
+
+//                networkService.createApi(textFromTextField, uiUpdate, this, {clickDebounce()}, retrofitConfiguration, {isConnected(this)})
+
+                loadTracksListAPI = LoadTracksListAPI(retrofitConfiguration)//, uiUpdate, this, isConnected(this))
+                loadTracksListAPI.execute(textFromTextField,{
+                    this.tracksAdapter = TrackListAdapter(it.results, this)
+//                    uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+//                    uiUpdate.uiRefreshOnFailureMethod(this, {isConnected(this)})
+                }, {
+//                    uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this), it)
+                    uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+
+                }, {
+                    uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this))//, it)
+                })
                 //} //+++++++++++++++++++++++++++
                 //responseResult(response)//++++++++++++++++++++++++++++++
 
@@ -107,14 +153,14 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
 
 
 
-    internal val binding: ActivitySearchBinding by lazy {
-        ActivitySearchBinding.inflate(layoutInflater)
-    }
+//    internal val binding: ActivitySearchBinding by lazy {
+//        ActivitySearchBinding.inflate(layoutInflater)
+//    }
 
-    lateinit var tracksAdapter: TrackListAdapter
+//    lateinit var tracksAdapter: TrackListAdapter
     lateinit var  address: String
     var stringWatcherTextEdit: String = DEF_VALUE
-    val historyTrackLists: MutableList<Result> = mutableListOf()
+    val historyTrackLists: MutableList<Track> = mutableListOf()
     val searchHistory = SearchHistory()
     val baseApiUrl = "https://itunes.apple.com"
     lateinit var iTunesAPI: ITunesSearchAPI
@@ -134,7 +180,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         searchHistory.sharedPreferencesCreated(getSharedPreferences("SEARCH_HISTORY", MODE_PRIVATE)) // создаём файл для локального хранения
         historyTrackLists.addAll(searchHistory.getHistory())  // сохраняем пустой список....
 
-        networkService = NetworkService()  //+++++++++++++++++++++++++++++++++++
+     //   networkService = NetworkService()  //+++++++++++++++++++++++++++++++++++
        // uiUpdate = UIUpdate(binding.trackListRecyclerView, binding.noSong,binding.noInternet, binding.progressBar) //++++++++
 
         binding.buttonClearHistoryList.setOnClickListener {
@@ -165,7 +211,22 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
            // if(networkService.createApi(address) != null) {
              //   response = networkService.createApi(address)!!
             //} //+++++++++++++++++++++++++++
-            networkService.createApi(address, uiUpdate, this, {clickDebounce()}, retrofitConfiguration,  {isConnected(this)} )
+
+
+           // networkService.createApi(address, uiUpdate, this, {clickDebounce()}, retrofitConfiguration,  {isConnected(this)} )
+
+            loadTracksListAPI = LoadTracksListAPI(retrofitConfiguration)//, uiUpdate, this, isConnected(this))
+            loadTracksListAPI.execute(address,{
+                this.tracksAdapter = TrackListAdapter(it.results, this)
+//                uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+//                uiUpdate.uiRefreshOnFailureMethod(this, {isConnected(this)})
+            },{
+//                uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this), it)
+                uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+
+            },{
+                uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this))// it)
+            })
             //responseResult(response)//+++++++++++++++++++++++++++++++++++
             if (binding.refreshButton.isClickable) {
                 binding.refreshButton.setOnClickListener {
@@ -174,7 +235,20 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                     binding.noInternet.visibility = View.GONE
 
 //                                               //+++++++++++++++++++++++++++
-                    networkService.createApi(textFromTextField, uiUpdate, this, {clickDebounce()}, retrofitConfiguration,  {isConnected(this)} )
+                   // networkService.createApi(textFromTextField, uiUpdate, this, {clickDebounce()}, retrofitConfiguration,  {isConnected(this)} )
+
+                    loadTracksListAPI = LoadTracksListAPI(retrofitConfiguration)//, uiUpdate, this, isConnected(this))
+                    loadTracksListAPI.execute(textFromTextField,{
+                        this.tracksAdapter = TrackListAdapter(it.results, this)
+//                        uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+//                        uiUpdate.uiRefreshOnFailureMethod(this, {isConnected(this)})
+                    }, {
+//                        uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this), it)
+                        uiUpdate.uiRefreshOnResponseMethod(it, this, {clickDebounce()} )
+
+                    }, {
+                        uiUpdate.uiRefreshOnFailureMethod(this, isConnected(this))//, it)
+                    })
                     //responseResult(response)//++++++++++++++++++++++++++++++==
                     Toast.makeText(
                         this@SearchActivity,
@@ -313,11 +387,11 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
                 }
 
                 override fun onFailure(call: Call<ITunesDTO>, t: Throwable) {
-                    if (isConnected(this@SearchActivity).not()) {
-                        binding.trackListRecyclerView.visibility = View.GONE
-                        binding.noSong.visibility = View.GONE
-                        binding.noInternet.visibility = View.VISIBLE
-                    }
+//                    if (isConnected(this@SearchActivity).not()) {
+//                        binding.trackListRecyclerView.visibility = View.GONE
+//                        binding.noSong.visibility = View.GONE
+//                        binding.noInternet.visibility = View.VISIBLE
+//                    }
                 }
             })
     }
@@ -375,6 +449,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
     }
 
     fun isConnected(context: Context): Boolean {
+//        Toast.makeText(context, "in isConnected", Toast.LENGTH_SHORT).show()
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (connectivityManager != null) {
@@ -383,12 +458,15 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
             if (capabilities != null) {
                 if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
                     Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+//                    Toast.makeText(context, "TRANSPORT_CELLULAR", Toast.LENGTH_SHORT).show()
                     return true
                 } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+//                    Toast.makeText(context, "TRANSPORT_WIFI", Toast.LENGTH_SHORT).show()
                     return true
                 } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
                     Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+//                    Toast.makeText(context, "TRANSPORT_ETHERNET", Toast.LENGTH_SHORT).show()
                     return true
                 }
             }
@@ -396,7 +474,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         return false
     }
 
-    override fun OnClick(track: Result) {
+    override fun OnClick(track: Track) {
 
         LibraryActivity.ACTIVITY = this@SearchActivity
         startActivity(Intent(this@SearchActivity, LibraryActivity::class.java))
@@ -409,7 +487,7 @@ class SearchActivity : AppCompatActivity(), TrackListAdapter.Listener {
         sharedPreferences.edit().putString("last_track_history", json).apply()
         trackForLibraryActivity = Gson().fromJson(
             sharedPreferences.getString("last_track_history", null),
-            Result::class.java
+            Track::class.java
         )
 
         searchHistory.add(track)   //  добавляем трек в список истории

@@ -3,12 +3,12 @@ package com.practicum.playlistmaker.Presentation
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.Domain.Track
 import com.practicum.playlistmaker.R
 
 
 class TrackListAdapter(
-    private var track:List<Result>, var listener: Listener
+    private var track:List<Track>, var listener: Listener
 ): RecyclerView.Adapter<TrackListHolder>() {
 
 //   private lateinit var track: List<Result>
@@ -26,10 +26,10 @@ class TrackListAdapter(
     override fun getItemCount(): Int = track.size
 
     interface Listener {
-        fun OnClick(track: Result)
+        fun OnClick(track: Track)
     }
 
-    fun updateTracks(newTracks: List<Result>) {
+    fun updateTracks(newTracks: List<Track>) {
         track = newTracks
         notifyDataSetChanged()
     }

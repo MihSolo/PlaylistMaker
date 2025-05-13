@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.gson.Gson
 import com.practicum.playlistmaker.App
-import com.practicum.playlistmaker.Domain.Result
+import com.practicum.playlistmaker.Domain.Track
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.databinding.ActivityLibraryBinding
 import com.practicum.playlistmaker.databinding.ActivitySettingsBinding
@@ -70,7 +70,7 @@ class LibraryActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
         }
         var trackForLibraryActivity = Gson().fromJson(
             sharedPreferences.getString("last_track_history", null),
-            Result::class.java
+            Track::class.java
         )
 
         if (trackForLibraryActivity != null) {
@@ -285,7 +285,7 @@ class LibraryActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     ): Boolean = false
 
 
-    private fun preparePlayer(trackForLibraryActivity: Result) {
+    private fun preparePlayer(trackForLibraryActivity: Track) {
         mediaPlayer.setDataSource(trackForLibraryActivity.previewUrl)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {

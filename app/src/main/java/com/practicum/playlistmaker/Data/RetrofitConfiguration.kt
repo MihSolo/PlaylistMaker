@@ -1,6 +1,5 @@
 package com.practicum.playlistmaker.Data
 
-import com.practicum.playlistmaker.ITunesDTO
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Callback
